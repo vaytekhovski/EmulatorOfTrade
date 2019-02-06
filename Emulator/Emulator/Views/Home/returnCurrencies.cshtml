@@ -1,0 +1,47 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string site = "https://poloniex.com/public?command=returnCurrencies";
+    string FileName = "returnCurrencies";
+    var data = QuickType.Currencies.FromJson(QuickType.JsonToString.GetString(site, FileName));
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link type="text/css" rel="stylesheet" href="../../Content/Site.css" />
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td><p>Key</p></td>
+                <td><p>Id:</p></td>
+                <td><p>Name:</p></td>
+                <td><p>TxFee:</p></td>
+                <td><p>MinConf:</p></td>
+                <td><p>disabled:</p></td>
+                <td><p>delisted:</p></td>
+                <td><p>frozen:</p></td>
+                <td><p>DepositAddress:</p></td>
+            </tr>
+            @foreach (KeyValuePair<string, QuickType.Currencies> KeyValuePair in data)
+            {
+                <tr>
+                    <td><p>@KeyValuePair.Key</p></td>
+                    <td><p>@KeyValuePair.Value.Id</p></td>
+                    <td><p>@KeyValuePair.Value.Name</p></td>
+                    <td><p>@KeyValuePair.Value.TxFee</p></td>
+                    <td><p>@KeyValuePair.Value.MinConf</p></td>
+                    <td><p>@KeyValuePair.Value.Disabled</p></td>
+                    <td><p>@KeyValuePair.Value.Delisted</p></td>
+                    <td><p>@KeyValuePair.Value.Frozen</p></td>
+                    <td><p>@KeyValuePair.Value.DepositAddress</p></td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>
