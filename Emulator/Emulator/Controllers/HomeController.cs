@@ -25,14 +25,5 @@ namespace TradeEmulatorMVC.Controllers
             return View();
         }
 
-        public ActionResult returnCurrencies()
-        {
-            return View();
-        }
-
-        public ActionResult returnLoanOrders()
-        {
-            return View();
-        }
     }
 }

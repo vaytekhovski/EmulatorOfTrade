@@ -106,8 +106,6 @@
     <Compile Include="Models\Poloniex\Methods\JsonToString.cs" />
     <Compile Include="Models\Poloniex\Methods\LoadFromPoliniex.cs" />
     <Compile Include="Models\Poloniex\ChartData.cs" />
-    <Compile Include="Models\Poloniex\Currencies.cs" />
-    <Compile Include="Models\Poloniex\LoanOrders.cs" />
     <Compile Include="Models\Poloniex\TradeHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -117,8 +115,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\returnChartData.cshtml" />
     <Content Include="Views\Home\returnTradeHistory.cshtml" />
-    <Content Include="Views\Home\returnCurrencies.cshtml" />
-    <Content Include="Views\Home\returnLoanOrders.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
