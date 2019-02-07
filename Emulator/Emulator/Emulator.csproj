@@ -101,13 +101,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Poloniex\Converter.cs" />
-    <Compile Include="Models\Poloniex\JsonToString.cs" />
-    <Compile Include="Models\Poloniex\LoadFromPoliniex.cs" />
-    <Compile Include="Models\Poloniex\Methods\ChartData.cs" />
-    <Compile Include="Models\Poloniex\Methods\Currencies.cs" />
-    <Compile Include="Models\Poloniex\Methods\LoanOrders.cs" />
-    <Compile Include="Models\Poloniex\Methods\TradeHistory.cs" />
+    <Compile Include="Models\Poloniex\DropDownList\Coin.cs" />
+    <Compile Include="Models\Poloniex\Methods\Converter.cs" />
+    <Compile Include="Models\Poloniex\Methods\JsonToString.cs" />
+    <Compile Include="Models\Poloniex\Methods\LoadFromPoliniex.cs" />
+    <Compile Include="Models\Poloniex\ChartData.cs" />
+    <Compile Include="Models\Poloniex\Currencies.cs" />
+    <Compile Include="Models\Poloniex\LoanOrders.cs" />
+    <Compile Include="Models\Poloniex\TradeHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
