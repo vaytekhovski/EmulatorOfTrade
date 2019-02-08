@@ -13,7 +13,7 @@ namespace Emulator
     {
         protected void Application_Start()
         {
-            Database.SetInitializer(new TradeHistoryDbInitializer());
+            
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
