@@ -9,18 +9,19 @@
 
 
 <body>
-    <form action="../Home/returnTradeHistory" method="post">
+    <button>@Html.ActionLink("Home", "Index", "Home")</button>
+    <form method="post">
         Start date:
-                    <input type="date" name="StartDate">
-        </br>End date:
-                       <input type="date" name="EndDate">
-        <br />
-        <input type="submit" name="name" value="returnTradeHistory" />
+        <input type="date" name="StartDate">
+        </br>
+        End date:
+        <input type="date" name="EndDate">
+        </br>
+        <input type="submit" name="returnTradeHistory" value="returnTradeHistory" formaction="../Home/returnTradeHistory" formmethod="post" />
+        <input type="submit" name="returnChartData" value="returnChartData" formaction="../Home/returnChartData" formmethod="post" />
     </form>
-    <nav>
-        
-        <button>@Html.ActionLink("returnChartData", "returnChartData", "Home")</button>
-    </nav>
+
+
     @RenderBody()
 </body>
 </html>
