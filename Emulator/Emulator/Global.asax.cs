@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Data.Entity;
+using Emulator.Models;
 
 namespace Emulator
 {
@@ -11,6 +13,7 @@ namespace Emulator
     {
         protected void Application_Start()
         {
+            Database.SetInitializer(new TradeHistoryDbInitializer());
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }

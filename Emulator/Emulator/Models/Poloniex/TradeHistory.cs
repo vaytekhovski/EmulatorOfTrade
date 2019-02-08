@@ -17,6 +17,8 @@ namespace QuickType
 
     public partial class TradeHistory
     {
+        public int Id { get; set; }
+
         [JsonProperty("globalTradeID")]
         public long GlobalTradeId { get; set; }
 

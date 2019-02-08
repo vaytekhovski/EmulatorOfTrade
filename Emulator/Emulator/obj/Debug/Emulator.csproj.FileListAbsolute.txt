@@ -76,3 +76,7 @@ D:\REPOSITORY\EmulatorOfTrade\Emulator\Emulator\obj\Debug\Emulator.csproj.CoreCo
 D:\REPOSITORY\EmulatorOfTrade\Emulator\Emulator\obj\Debug\Emulator.csproj.CopyComplete
 D:\REPOSITORY\EmulatorOfTrade\Emulator\Emulator\obj\Debug\Emulator.dll
 D:\REPOSITORY\EmulatorOfTrade\Emulator\Emulator\obj\Debug\Emulator.pdb
+D:\REPOSITORY\EmulatorOfTrade\Emulator\Emulator\bin\EntityFramework.dll
+D:\REPOSITORY\EmulatorOfTrade\Emulator\Emulator\bin\EntityFramework.SqlServer.dll
+D:\REPOSITORY\EmulatorOfTrade\Emulator\Emulator\bin\EntityFramework.xml
+D:\REPOSITORY\EmulatorOfTrade\Emulator\Emulator\bin\EntityFramework.SqlServer.xml

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using QuickType;
+using Emulator.Models;
 
 namespace TradeEmulatorMVC.Controllers
 {
@@ -21,8 +22,13 @@ namespace TradeEmulatorMVC.Controllers
             return View();
         }
 
+
+        TradeContext db = new TradeContext();
         public ActionResult returnTradeHistory()
         {
+            IEnumerable<TradeHistory> histories = db.Histories;
+            ViewBag.histories = histories;
+
             return View();
         }
 

@@ -112,6 +112,8 @@
     <Compile Include="Models\Poloniex\Methods\LoadFromPoliniex.cs" />
     <Compile Include="Models\Poloniex\ChartData.cs" />
     <Compile Include="Models\Poloniex\TradeHistory.cs" />
+    <Compile Include="Models\TradeContext.cs" />
+    <Compile Include="Models\TradeHistoryDbInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

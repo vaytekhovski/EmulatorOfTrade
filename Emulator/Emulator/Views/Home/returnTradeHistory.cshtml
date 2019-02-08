@@ -1,9 +1,7 @@
 ﻿
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    string site = "https://poloniex.com/public?command=returnTradeHistory&currencyPair=BTC_ETH";
-    string FileName = "returnTradeHistory";
-    var data = QuickType.TradeHistory.FromJson(QuickType.JsonToString.GetString(site, FileName));
+    
 }
 
 <!DOCTYPE html>
@@ -25,7 +23,7 @@
                 <td><p>Количество:</p></td>
                 <td><p>Всего:</p></td>
             </tr>
-            @foreach (QuickType.TradeHistory value in data)
+            @foreach (var value in ViewBag.histories)
             {
                 <tr>
                     <td><p>@value.GlobalTradeId</p></td>
