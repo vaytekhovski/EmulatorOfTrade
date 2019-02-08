@@ -1,9 +1,6 @@
 ﻿
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    string site = "https://poloniex.com/public?command=returnChartData&currencyPair=BTC_XMR&start=1405699200&end=9999999999&period=14400";
-    string FileName = "returnChartData";
-    var data = QuickType.ChartData.FromJson(QuickType.JsonToString.GetString(site, FileName));
 }
 
 <!DOCTYPE html>
@@ -26,7 +23,7 @@
                 <td><p>Объем котировки:</p></td>
                 <td><p>Средневзвешенное:</p></td>
             </tr>
-            @foreach (QuickType.ChartData value in data)
+            @foreach (var value in ViewBag.charts)
             {
                 var dateTime = new DateTime(1970, 1, 1).AddSeconds(value.Date).ToLocalTime();
                 <tr>

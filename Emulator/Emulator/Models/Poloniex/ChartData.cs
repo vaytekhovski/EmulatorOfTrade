@@ -6,6 +6,8 @@
 
     public partial class ChartData
     {
+        public int Id { get; set; }
+
         [JsonProperty("date")]
         public long Date { get; set; }
 

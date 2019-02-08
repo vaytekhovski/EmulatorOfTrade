@@ -13,8 +13,7 @@ namespace Emulator.Models
             string site = "https://poloniex.com/public?command=returnTradeHistory&currencyPair=BTC_ETH";
             string FileName = "returnTradeHistory";
             var data = QuickType.TradeHistory.FromJson(QuickType.JsonToString.GetString(site, FileName));
-            
-            foreach(var value in data)
+            foreach (var value in data)
             {
                 context.Histories.Add(new QuickType.TradeHistory
                 {

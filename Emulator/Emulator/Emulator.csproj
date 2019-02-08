@@ -107,6 +107,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChartDataDbInitializer.cs" />
     <Compile Include="Models\Poloniex\Methods\Converter.cs" />
     <Compile Include="Models\Poloniex\Methods\JsonToString.cs" />
     <Compile Include="Models\Poloniex\Methods\LoadFromPoliniex.cs" />

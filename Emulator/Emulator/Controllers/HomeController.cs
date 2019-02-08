@@ -18,7 +18,8 @@ namespace TradeEmulatorMVC.Controllers
 
         public ActionResult returnChartData()
         {
-
+            IEnumerable<ChartData> charts = db.ChartDatas;
+            ViewBag.charts = charts;
             return View();
         }
 
@@ -26,9 +27,10 @@ namespace TradeEmulatorMVC.Controllers
         TradeContext db = new TradeContext();
         public ActionResult returnTradeHistory()
         {
+            
             IEnumerable<TradeHistory> histories = db.Histories;
             ViewBag.histories = histories;
-
+         
             return View();
         }
 

@@ -14,6 +14,7 @@ namespace Emulator
         protected void Application_Start()
         {
             Database.SetInitializer(new TradeHistoryDbInitializer());
+            Database.SetInitializer(new ChartDataDbInitializer());
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
