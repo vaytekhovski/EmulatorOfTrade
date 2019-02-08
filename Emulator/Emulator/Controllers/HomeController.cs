@@ -17,6 +17,7 @@ namespace TradeEmulatorMVC.Controllers
 
         public ActionResult returnChartData()
         {
+
             return View();
         }
 

@@ -9,16 +9,6 @@
 
 
 <body>
-    <coin>
-        @using Emulator.Models.Poloniex.DropDownList
-
-        @model Coin
-
-        @Html.DropDownListFor(m => m.Name,
-                    new SelectList(Enum.GetValues(typeof(Coins))),
-                    "Валюта")
-       
-    </coin>
     <nav>
         <button>@Html.ActionLink("Home", "Index", "Home")</button>
         <button>@Html.ActionLink("returnTradeHistory ", "returnTradeHistory", "Home")</button>
