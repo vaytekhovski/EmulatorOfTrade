@@ -25,21 +25,7 @@ namespace Emulator.Models
             string site = "https://"+$"poloniex.com/public?command=returnChartData&currencyPair=BTC_XMR&start={UnixStartDate}&end={UnixEndDate}&period=14400";
             string FileName = "returnChartData";
             var data1 = QuickType.ChartData.FromJson(QuickType.JsonToString.GetString(site, FileName));
-            foreach (var value in data1)
-            {
-                context.ChartDatas.Add(new QuickType.ChartData
-                {
-                    Date = value.Date,
-                    High = value.High,
-                    Low = value.Low,
-                    Open = value.Open,
-                    Close = value.Close,
-                    Volume = value.Volume,
-                    QuoteVolume = value.QuoteVolume,
-                    WeightedAverage = value.WeightedAverage
-                });
-
-            }
+            context.ChartDatas.AddRange(data1);
 
             base.Seed(context);
         }
