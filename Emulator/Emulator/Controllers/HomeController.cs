@@ -18,10 +18,10 @@ namespace TradeEmulatorMVC.Controllers
             return View();
         }
 
-        public ActionResult returnChartData(DateTime StartDate, DateTime EndDate)
+        public ActionResult returnChartData(DateTime StartDate, DateTime EndDate, string FirstPair, string SecondPair)
         {
 
-            Database.SetInitializer(new ChartDataDbInitializer(StartDate, EndDate));
+            Database.SetInitializer(new ChartDataDbInitializer(StartDate, EndDate,FirstPair,SecondPair));
 
             IEnumerable<ChartData> charts = db.ChartDatas;
             ViewBag.charts = charts;
@@ -31,9 +31,9 @@ namespace TradeEmulatorMVC.Controllers
 
        
         [HttpPost]
-        public ActionResult returnTradeHistory(DateTime StartDate, DateTime EndDate)
+        public ActionResult returnTradeHistory(DateTime StartDate, DateTime EndDate, string FirstPair, string SecondPair)
         {
-            Database.SetInitializer(new TradeHistoryDbInitializer(StartDate, EndDate));
+            Database.SetInitializer(new TradeHistoryDbInitializer(StartDate, EndDate,FirstPair,SecondPair));
             IEnumerable<TradeHistory> histories = db.Histories;
             ViewBag.histories = histories;
          
