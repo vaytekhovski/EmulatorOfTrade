@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using QuickType;
 using Emulator.Models;
+using System.Data.Entity;
 
 namespace TradeEmulatorMVC.Controllers
 {
@@ -25,9 +26,14 @@ namespace TradeEmulatorMVC.Controllers
 
 
         TradeContext db = new TradeContext();
-        public ActionResult returnTradeHistory()
+        [HttpPost]
+        public ActionResult returnTradeHistory(DateTime StartDate, DateTime EndDate)
         {
+<<<<<<< HEAD
             
+=======
+            Database.SetInitializer(new TradeHistoryDbInitializer(StartDate, EndDate));
+>>>>>>> fddbc687aa235351b43b0af5ba7ed0577da3b641
             IEnumerable<TradeHistory> histories = db.Histories;
             ViewBag.histories = histories;
          
