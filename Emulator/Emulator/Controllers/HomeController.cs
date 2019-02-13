@@ -21,13 +21,6 @@ namespace TradeEmulatorMVC.Controllers
         {
             return View();
         }
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-
-        
-=======
->>>>>>> e265b899ac8ea2481501aeb6da279ed2ccefb069
        
         [HttpPost]
         public ActionResult returnTradeHistory(DateTime StartDate, DateTime EndDate, string FirstPair, string SecondPair)
@@ -63,10 +56,6 @@ namespace TradeEmulatorMVC.Controllers
             
             return View(histories);
         }
-<<<<<<< HEAD
-=======
->>>>>>> origin/Andrey
->>>>>>> e265b899ac8ea2481501aeb6da279ed2ccefb069
 
     }
 }

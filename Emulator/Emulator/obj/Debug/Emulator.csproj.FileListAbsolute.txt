@@ -163,3 +163,4 @@ D:\GITBASH\EmulatorOfTrade\Emulator\Emulator\obj\Debug\Emulator.csproj.CopyCompl
 D:\GITBASH\EmulatorOfTrade\Emulator\Emulator\obj\Debug\Emulator.dll
 D:\GITBASH\EmulatorOfTrade\Emulator\Emulator\obj\Debug\Emulator.pdb
 D:\GITBASH\EmulatorOfTrade\Emulator\Emulator\bin\ru\EntityFramework.resources.dll
+D:\REPOSITORY\EmulatorOfTrade\Emulator\Emulator\bin\ru\EntityFramework.resources.dll
