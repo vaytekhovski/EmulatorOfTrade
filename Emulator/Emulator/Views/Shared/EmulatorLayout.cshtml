@@ -1,0 +1,40 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+</head>
+
+
+
+<body>
+    <button>@Html.ActionLink("Home", "Index", "Home")</button>
+    <form method="post">
+        <select name="Pair">
+            <option value="BTC">USDT-BTC</option>
+            <option value="XRP">USDT-XRP</option>
+            <option value="ETH">USDT-ETH</option>
+        </select>
+        <input type="date" name="StartDate">
+        <input type="date" name="EndDate">
+        </br>
+
+        <label for="diff">diff: </label>
+        <input type="text" name="diff" value="1,5" />%
+        <br />
+        <label for="checkTime">checkTime: </label>
+        <input type="text" name="checkTime" value="5" />мин.
+        <br />
+        <label for="buyTime">buyTime: </label>
+        <input type="text" name="buyTime" value="3" />мин.
+        <br />
+        <label for="holdTime">holdTime: </label>
+        <input type="text" name="holdTime" value="6" />мин.
+        </br>
+
+        <input type="submit" name="startEmulation" value="Запуск" formaction="../Emulator/Emulation" formmethod="post" />
+    </form>
+
+    @RenderBody()
+</body>
+</html>

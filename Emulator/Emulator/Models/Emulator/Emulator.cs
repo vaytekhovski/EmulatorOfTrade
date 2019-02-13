@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Threading;
+using System.Diagnostics;
 
 namespace Emulator.Models.Emulator
 {
@@ -31,24 +32,29 @@ namespace Emulator.Models.Emulator
             CheckTime = _CheckTime;
             BuyTime = _BuyTime;
             HoldTime = _HoldTime;
+
+            StartTime = new DateTime(_StartTime.Year, _StartTime.Month, _StartTime.Day, 0, 01, 00);
         }
 
       
         public void MakeMoney()
         {
-            for (DateTime currentTime = StartTime; currentTime < EndTime; currentTime.AddMinutes(1))
+            DateTime currentTime = StartTime;
+            while(currentTime < EndTime)
             {
                 // цикл, необходимый для проверки курса на всем CheckTime
                 // проверка курса каждые 30 сек
-                for(double tempCheckTime = CheckTime; tempCheckTime >= 0; tempCheckTime -= 0.5)
+                for (double tempCheckTime = CheckTime; tempCheckTime > 0; tempCheckTime -= 0.5)
                 {
                     // Если курс в текущий момент / курс в (текущий момент - CheckTime) валиден то
                     if (ReturnCourseValue(currentTime) / ReturnCourseValue(currentTime.AddMinutes(-tempCheckTime)) >= Diff)
                     {
-                        Buy(currentTime, BuyTime);
-                        Sell(currentTime, HoldTime);
+                        Buy(ref currentTime, BuyTime);
+                        Sell(ref currentTime, HoldTime);
+                        break;
                     }
                 }
+                currentTime = currentTime.AddMinutes(1);
             }
         }
 
@@ -60,17 +66,24 @@ namespace Emulator.Models.Emulator
         }
 
         // Имитация покупки
-        private void Buy(DateTime curretTime, double buyTime)
+        private void Buy(ref DateTime curretTime, double buyTime)
         {
             // покупаем пока BuyTime не приблизился к currentTime
-            Thread.Sleep((int)buyTime * 3600);
+            double tempBuyTime = BuyTime;
+            while (tempBuyTime > 0)
+            {
+                Debug.WriteLine(curretTime + " Buy");
+                curretTime = curretTime.AddMinutes(1);
+                tempBuyTime--;
+            }
         }
 
         // Имитация продажи
-        private void Sell(DateTime curretTime, double holdTime)
+        private void Sell(ref DateTime curretTime, double holdTime)
         {
             // ждем HoldTime, после чего продаем 
-            Thread.Sleep((int)holdTime * 3600);
+            curretTime = curretTime.AddMinutes(holdTime);
+            Debug.WriteLine(curretTime + " Sell");
         }
     }
 }

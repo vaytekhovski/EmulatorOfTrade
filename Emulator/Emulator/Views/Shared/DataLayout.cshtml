@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+</head>
+
+
+
+<body>
+    <button>@Html.ActionLink("Home", "Index", "Home")</button>
+    <form method="post">
+        <select name="Pair">
+            <option value="BTC">USDT-BTC</option>
+            <option value="XRP">USDT-XRP</option>
+            <option value="ETH">USDT-ETH</option>
+        </select>
+        <input type="date" name="StartDate">
+        <input type="date" name="EndDate">
+        </br>
+
+        <style type="text/css">
+            .container {
+                height: 100px;
+                width: 600px;
+            }
+
+            .left {
+                float: left;
+                width: 300px;
+            }
+
+            .right {
+                float: right;
+                width: 300px;
+            }
+        </style>
+
+        <div class="container">
+            <div class="left">
+                <fieldset>
+                    <legend>Show</legend>
+                    <input type="submit" name="showTradeHistory" value="Trade History" formaction="../Data/returnTradeHistory" formmethod="post" />
+                    <input type="submit" name="showChartData" value="Chart Data" formaction="../Data/returnChartData" formmethod="post" />
+                </fieldset>
+            </div>
+            <div class="right">
+                <fieldset>
+                    <legend>Download</legend>
+                    <input type="submit" name="downloadTradeHistory" value="Trade History" formaction="../Data/returnTradeHistory" formmethod="post" />
+                    <input type="submit" name="downloadChartData" value="Chart Data" formaction="../Data/returnChartData" formmethod="post" />
+                </fieldset>
+            </div>
+        </div>
+
+
+        
+
+        
+
+    </form>
+
+    @RenderBody()
+</body>
+</html>
