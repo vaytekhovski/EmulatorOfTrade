@@ -1,0 +1,82 @@
+﻿@model Emulator.ChartData
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ChartData</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.High)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.High)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Low)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Low)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Open)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Open)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Close)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Close)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Volume)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Volume)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuoteVolume)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuoteVolume)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.WeightedAverage)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.WeightedAverage)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

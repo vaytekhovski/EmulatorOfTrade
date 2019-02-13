@@ -111,6 +111,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ChartDataDbInitializer.cs" />
+    <Compile Include="Models\DownloadTradeHistory.cs" />
     <Compile Include="Models\Emulator\Emulator.cs" />
     <Compile Include="Models\Poloniex\Methods\Converter.cs" />
     <Compile Include="Models\Poloniex\Methods\JsonToString.cs" />

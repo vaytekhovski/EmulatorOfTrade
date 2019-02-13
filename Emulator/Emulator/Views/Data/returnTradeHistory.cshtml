@@ -1,6 +1,12 @@
-﻿
+﻿@model IEnumerable<QuickType.TradeHistory>
+
 @{
+<<<<<<< HEAD:Emulator/Emulator/Views/Data/returnTradeHistory.cshtml
     Layout = "~/Views/Shared/DataLayout.cshtml";
+=======
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+>>>>>>> origin/Andrey:Emulator/Emulator/Views/Home/returnTradeHistory.cshtml
 }
 
 <!DOCTYPE html>
@@ -24,7 +30,7 @@
                 <td><p>Количество:</p></td>
                 <td><p>Всего:</p></td>
             </tr>
-            @foreach (var value in ViewBag.histories)
+            @foreach (var value in Model)
             {
                 <tr>
                     <td><p>@value.GlobalTradeId</p></td>
