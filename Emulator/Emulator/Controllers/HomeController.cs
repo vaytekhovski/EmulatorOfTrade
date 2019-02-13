@@ -11,8 +11,9 @@ namespace TradeEmulatorMVC.Controllers
     {
         TradeContext db = new TradeContext();
 
-        public ActionResult Index()
+        public ActionResult Index(string SortOrder)
         {
+
             return View();
         }
 
@@ -34,16 +35,36 @@ namespace TradeEmulatorMVC.Controllers
         [HttpPost]
         public ActionResult returnTradeHistory(DateTime StartDate, DateTime EndDate, string FirstPair, string SecondPair)
         {
-            Database.SetInitializer(new TradeHistoryDbInitializer(StartDate, EndDate,FirstPair,SecondPair));
-            IEnumerable<TradeHistory> histories = db.Histories;
-            ViewBag.histories = histories;
-
+           // Database.SetInitializer(new TradeHistoryDbInitializer(StartDate, EndDate,FirstPair,SecondPair));
+            
             ViewBag.StartDate = StartDate;
             ViewBag.EndDate = EndDate;
             ViewBag.FirstPair = FirstPair;
             ViewBag.SecondPair = SecondPair;
 
-            return View();
+            
+            List<TradeHistory> lst = DownloadTradeHistory.CycleDownloadData(StartDate, EndDate, FirstPair, SecondPair);
+            
+            foreach (var DBitem in db.Histories)
+            {
+                for (int i = 0; i < lst.Count; i++)
+                {
+                    if (DBitem.GlobalTradeId == lst[i].GlobalTradeId)
+                    {
+                        lst.RemoveAt(i);
+                    }
+                }
+            }
+
+            IEnumerable<TradeHistory> histories = db.Histories;
+            
+            db.Histories.AddRange(lst);
+            db.SaveChanges();
+            histories = db.Histories.SqlQuery("select * from TradeHistories Order by [Date]");
+
+            db.SaveChanges();
+            
+            return View(histories);
         }
 
     }

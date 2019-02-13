@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using Emulator.Models;
 
 namespace Emulator.Models
 {
@@ -20,41 +21,16 @@ namespace Emulator.Models
 
         protected override void Seed(TradeContext context)
         {
-            context.Histories.AddRange(CycleDownloadData());
+            context.Histories.AddRange(DownloadTradeHistory.CycleDownloadData(StartDate,EndDate,FirstPair,SecondPair));
             base.Seed(context);
         }
 
-        List<QuickType.TradeHistory> CycleDownloadData()
+        public void Update(TradeContext context)
         {
-            DateTime start, end;
-            start = EndDate;
-            end = EndDate;
-            List<QuickType.TradeHistory> data = new List<QuickType.TradeHistory>();
-            string FileName = "returnTradeHistory";
             
-
-            int i = 0;
-            do
-            {
-                end = EndDate.AddDays(-i);
-
-                if (start.AddDays(-10).Date < StartDate)
-                    start = StartDate;
-                else
-                    start = end.AddDays(-10);
-
-
-                int UnixStartDate = (int)(start - new DateTime(1970, 1, 1)).TotalSeconds;
-                int UnixEndDate = (int)(end - new DateTime(1970, 1, 1)).TotalSeconds;
-
-                string site = "https://" + $"poloniex.com/public?command=returnTradeHistory&currencyPair={FirstPair}_{SecondPair}&start={UnixStartDate}&end={UnixEndDate}";
-                data.AddRange(QuickType.TradeHistory.FromJson(QuickType.JsonToString.GetString(site, FileName)));
-
-                i += 10;
-            } while (start != StartDate);
-
-
-            return data;
+            context.Histories.AddRange(DownloadTradeHistory.CycleDownloadData(StartDate, EndDate, FirstPair, SecondPair));
         }
+
+        
     }
 }
