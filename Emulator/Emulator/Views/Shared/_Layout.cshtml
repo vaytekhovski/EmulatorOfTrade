@@ -17,20 +17,24 @@
         Дата конца:
         <input type="date" name="EndDate">
         </br>
-        Валютная пара: 
+        Валютная пара:
         <select name="FirstPair">
             <option value="USDT">USDT</option>
         </select>
+
+
+
         <select name="SecondPair">
             <option value="BTC">BTC</option>
             <option value="XRP">XRP</option>
-            <option value="XRP">ETH</option>
+            <option value="ETH">ETH</option>
         </select>
+
+
         <br />
         <input type="submit" name="returnTradeHistory" value="returnTradeHistory" formaction="../Home/returnTradeHistory" formmethod="post" />
         <input type="submit" name="returnChartData" value="returnChartData" formaction="../Home/returnChartData" formmethod="post" />
     </form>
-
 
     @RenderBody()
 </body>
