@@ -16,19 +16,9 @@ namespace TradeEmulatorMVC.Controllers
 
             return View();
         }
-
-        [HttpPost]
-        public ActionResult returnChartData(DateTime StartDate, DateTime EndDate, string FirstPair, string SecondPair)
+        
+        public ActionResult Main()
         {
-            Database.SetInitializer(new ChartDataDbInitializer(StartDate, EndDate,FirstPair,SecondPair));
-            IEnumerable<ChartData> charts = db.ChartDatas;
-            ViewBag.charts = charts;
-
-            ViewBag.StartDate = StartDate;
-            ViewBag.EndDate = EndDate;
-            ViewBag.FirstPair = FirstPair;
-            ViewBag.SecondPair = SecondPair;
-
             return View();
         }
        

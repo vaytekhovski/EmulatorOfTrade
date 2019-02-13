@@ -97,12 +97,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\Data\DataController.cs" />
+    <Compile Include="Controllers\Data\DownloadController.cs" />
+    <Compile Include="Controllers\Data\ShowController.cs" />
+    <Compile Include="Controllers\Emulator\EmulatorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -123,9 +126,13 @@
     <Content Include="Views\web.config" />
     <None Include="packages.config" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\returnChartData.cshtml" />
-    <Content Include="Views\Home\returnTradeHistory.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Data\returnChartData.cshtml" />
+    <Content Include="Views\Data\returnTradeHistory.cshtml" />
+    <Content Include="Views\Shared\DataLayout.cshtml" />
+    <Content Include="Views\Emulator\Main.cshtml" />
+    <Content Include="Views\Data\Main.cshtml" />
+    <Content Include="Views\Shared\EmulatorLayout.cshtml" />
+    <Content Include="Views\Emulator\Emulation.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -135,6 +142,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\" />
+    <Folder Include="Views\Download\" />
+    <Folder Include="Views\Show\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

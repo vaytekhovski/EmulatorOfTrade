@@ -1,0 +1,45 @@
+﻿
+@{
+    Layout = "~/Views/Shared/DataLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+</head>
+<body>
+    <div>
+        <div>
+            <h1>@ViewBag.StartDate - @ViewBag.EndDate | @ViewBag.FirstPair-@ViewBag.SecondPair</h1>
+        </div>
+        <table>
+            <tr>
+                <td><p>Дата:</p></td>
+                <td><p>Максимум:</p></td>
+                <td><p>Минимум:</p></td>
+                <td><p>Открыто:</p></td>
+                <td><p>Закрыто:</p></td>
+                <td><p>Объем:</p></td>
+                <td><p>Объем котировки:</p></td>
+                <td><p>Средневзвешенное:</p></td>
+            </tr>
+            @foreach (var value in ViewBag.charts)
+            {
+                var dateTime = new DateTime(1970, 1, 1).AddSeconds(value.Date).ToLocalTime();
+                <tr>
+                    <td><p>@dateTime</p></td>
+                    <td><p>@value.High</p></td>
+                    <td><p>@value.Low</p></td>
+                    <td><p>@value.Open</p></td>
+                    <td><p>@value.Close</p></td>
+                    <td><p>@value.Volume</p></td>
+                    <td><p>@value.QuoteVolume</p></td>
+                    <td><p>@value.WeightedAverage</p></td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

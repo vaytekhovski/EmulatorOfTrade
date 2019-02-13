@@ -1,17 +1,15 @@
 ﻿
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
 
 <!DOCTYPE html>
 
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link type="text/css" rel="stylesheet" href="../../Content/Site.css" />
 </head>
 <body>
     <div>
+        <button>@Html.ActionLink("Data", "Main", "Data")</button>
+        <button>@Html.ActionLink("Emulator", "Main", "Emulator")</button>
     </div>
 </body>
 </html>
