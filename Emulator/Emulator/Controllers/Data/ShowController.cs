@@ -8,10 +8,10 @@ namespace Emulator.Controllers.Data
 {
     public class ShowController : Controller
     {
-        // GET: Show
         public ActionResult Index()
         {
             return View();
+            
         }
     }
 }

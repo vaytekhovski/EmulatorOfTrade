@@ -14,12 +14,12 @@ namespace Emulator.Models
             
         }
 
-        static public List<QuickType.TradeHistory> CycleDownloadData(DateTime _StartDate, DateTime _EndDate, string fPair, string sPair)
+        static public List<QuickType.TradeHistory> CycleDownloadData(DateTime _StartDate, DateTime _EndDate, string _Pair)
         {
             StartDate = _StartDate;
             EndDate = _EndDate;
-            FirstPair = fPair;
-            SecondPair = sPair;
+            FirstPair = "USDT";
+            SecondPair = _Pair;
 
             DateTime start, end;
             start = EndDate;
