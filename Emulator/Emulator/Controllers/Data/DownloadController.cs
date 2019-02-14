@@ -38,7 +38,7 @@ namespace Emulator.Controllers.Data
             OwnDataBase.database.Histories.AddRange(lst);
             OwnDataBase.database.SaveChanges();
             histories = OwnDataBase.database.Histories.SqlQuery("select * from TradeHistories Order by [Date]");
-
+            
             OwnDataBase.database.SaveChanges();
             ViewBag.status = $"Download trade history {Pair} ended";
             return View();

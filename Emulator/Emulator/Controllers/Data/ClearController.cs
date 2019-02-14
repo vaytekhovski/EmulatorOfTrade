@@ -9,19 +9,23 @@ using System.Data.Entity;
 
 namespace Emulator.Controllers.Data
 {
-    public class ShowController : Controller
+    public class ClearController : Controller
     {
+        // GET: Clear
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult ShowTradeHistiories()
+        public ActionResult ClearTradeHistory()
         {
             IEnumerable<TradeHistory> histories = OwnDataBase.database.Histories;
-            histories = OwnDataBase.database.Histories.SqlQuery("select * from TradeHistories Order by [Date]");
+
+            histories = OwnDataBase.database.Histories.SqlQuery("truncate table TradeHistories");
+
             OwnDataBase.database.SaveChanges();
-            return View(histories);
+            ViewBag.status = $"DataBase was cleared";
+            return View();
         }
     }
 }

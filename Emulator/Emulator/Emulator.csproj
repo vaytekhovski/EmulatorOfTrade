@@ -102,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\Data\ClearController.cs" />
     <Compile Include="Controllers\Data\DataController.cs" />
     <Compile Include="Controllers\Data\DownloadController.cs" />
     <Compile Include="Controllers\Data\ShowController.cs" />
@@ -135,6 +136,8 @@
     <Content Include="Views\Shared\EmulatorLayout.cshtml" />
     <Content Include="Views\Emulator\Emulation.cshtml" />
     <Content Include="Views\Download\TradeHistoryDownload.cshtml" />
+    <Content Include="Views\Show\ShowTradeHistiories.cshtml" />
+    <Content Include="Views\Clear\ClearTradeHistory.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -145,7 +148,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\" />
-    <Folder Include="Views\Show\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
