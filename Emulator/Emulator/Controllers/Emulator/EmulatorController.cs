@@ -8,7 +8,6 @@ namespace Emulator.Controllers
 {
     public class EmulatorController : Controller
     {
-        // GET: Emulator
         public ActionResult Index()
         {
             return View();
@@ -19,9 +18,9 @@ namespace Emulator.Controllers
             return View();
         }
 
-        public ActionResult Emulation(string Pair, DateTime StartDate, DateTime EndDate, string diff, string checkTime, string buyTime, string holdTime)
+        public ActionResult Emulation(string Pair, DateTime StartDate, DateTime EndDate, string diff, string checkTime, string buyTime, string holdTime, string balance)
         {
-            Emulator.Models.Emulator.Emulator emulator = new Models.Emulator.Emulator(Pair, StartDate, EndDate, Double.Parse(diff), Double.Parse(checkTime), Double.Parse(buyTime), Double.Parse(holdTime));
+            Models.Emulator.Emulator emulator = new Models.Emulator.Emulator(Pair, StartDate, EndDate, double.Parse(diff), double.Parse(checkTime), double.Parse(buyTime), double.Parse(holdTime), double.Parse(balance));
             emulator.MakeMoney();
             return View();
         }

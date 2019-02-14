@@ -102,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\Data\ClearController.cs" />
     <Compile Include="Controllers\Data\DataController.cs" />
     <Compile Include="Controllers\Data\DownloadController.cs" />
