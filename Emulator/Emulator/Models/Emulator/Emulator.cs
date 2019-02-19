@@ -12,21 +12,17 @@ namespace Emulator.Models.Emulator
         public Emulator() { }
 
         List<QuickType.TradeHistory> orderedHistories = OwnDataBase.database.Histories.OrderBy(history => history.Date).ToList();
-
-        // Валютная пара
+        
         string Coin;
-
-        // Время начала и конца проведения исследования
+        
         DateTime StartTime, EndTime;
-
-        // Процент корреляции, валидный для закупа
+        
         double Diff;
-
-        // Время проверки валидности, время закупки, время через которое начинается продажа
+        
         double CheckTime, BuyTime, HoldTime;
 
         double balanceUSD, balanceCoin;
-        double feeUSD = 0;
+        double feeUSD = 0, feeCoin = 0;
         
 
         public Emulator(string _Coin, DateTime _StartTime, DateTime _EndTime, double _Diff, double _CheckTime, double _BuyTime, double _HoldTime, double _balance)
@@ -116,17 +112,17 @@ namespace Emulator.Models.Emulator
                         data.Amount = data.Amount.Replace('.', ',');
                         data.Rate = data.Rate.Replace('.', ',');
 
-                        if (balanceUSD > double.Parse(data.Total))
+                        feeUSD = 0.002 * double.Parse(data.Total);
+                        if (balanceUSD - feeUSD > double.Parse(data.Total))
                         {
-                            //feeUSD = 0.02 * double.Parse(data.Total);
+                            balanceUSD -= feeUSD;
+
                             balanceUSD -= double.Parse(data.Total);
-                            //balanceUSD -= feeUSD;
                             balanceCoin += double.Parse(data.Amount);
                         }
                         else
                         {
-                            //feeUSD = 0.02 * double.Parse(data.Total);
-                            balanceCoin += ((balanceUSD /*-= feeUSD*/) / double.Parse(data.Rate));
+                            balanceCoin += ((balanceUSD - feeUSD) / double.Parse(data.Rate));
                             balanceUSD = 0;
                         }
                         break;
@@ -140,18 +136,18 @@ namespace Emulator.Models.Emulator
                         data.Amount = data.Amount.Replace('.', ',');
                         data.Rate = data.Rate.Replace('.', ',');
 
+                        feeCoin = 0.002 * double.Parse(data.Amount);
                         if (balanceCoin > double.Parse(data.Amount))
                         {
-                            //feeUSD = 0.02 * double.Parse(data.Total);
-                            balanceUSD += double.Parse(data.Total);
-                            //balanceUSD -= feeUSD;
+                            balanceCoin -= feeCoin;
+
                             balanceCoin -= double.Parse(data.Amount);
+                            balanceUSD += double.Parse(data.Total);
+                            
                         }
                         else
                         {
-                            //feeUSD = 0.02 * (balanceCoin * double.Parse(data.Rate));
-                            balanceUSD += (balanceCoin * double.Parse(data.Rate));
-                            //balanceUSD -= feeUSD;
+                            balanceUSD += ((balanceCoin - feeCoin) * double.Parse(data.Rate));
                             balanceCoin = 0;
                         }
                         break;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 
@@ -7,49 +8,24 @@ namespace Emulator.Models
 {
     public static class DownloadTradeHistory
     {
-        static private DateTime StartDate, EndDate;
-        static private string FirstPair, SecondPair;
-        static DownloadTradeHistory()
-        {
-            
-        }
+        private static string FirstPair, SecondPair;
 
         static public List<QuickType.TradeHistory> CycleDownloadData(DateTime _StartDate, DateTime _EndDate, string _Pair)
         {
-            StartDate = _StartDate;
-            EndDate = _EndDate;
             FirstPair = "USDT";
             SecondPair = _Pair;
-
-            DateTime start, end;
-            start = EndDate;
-            end = EndDate;
-            List<QuickType.TradeHistory> data = new List<QuickType.TradeHistory>();
+            
             string FileName = "returnTradeHistory";
 
+            int UnixStartDate = (int)(_StartDate - new DateTime(1970, 1, 1)).TotalSeconds;
+            int UnixEndDate = (int)(_EndDate - new DateTime(1970, 1, 1)).TotalSeconds;
 
-            int i = 0;
-            do
-            {
-                end = EndDate.AddDays(-i);
-
-                if (start.AddDays(-10).Date < StartDate)
-                    start = StartDate;
-                else
-                    start = end.AddDays(-10);
+            string site = "https://" + $"poloniex.com/public?command=returnTradeHistory&currencyPair={FirstPair}_{SecondPair}&start={UnixStartDate}&end={UnixEndDate}";
 
 
-                int UnixStartDate = (int)(start - new DateTime(1970, 1, 1)).TotalSeconds;
-                int UnixEndDate = (int)(end - new DateTime(1970, 1, 1)).TotalSeconds;
+            Debug.WriteLine($"Download trade history {_StartDate} : {_EndDate} ended");
 
-                string site = "https://" + $"poloniex.com/public?command=returnTradeHistory&currencyPair={FirstPair}_{SecondPair}&start={UnixStartDate}&end={UnixEndDate}";
-                data.AddRange(QuickType.TradeHistory.FromJson(QuickType.JsonToString.GetString(site, FileName)));
-
-                i += 10;
-            } while (start != StartDate);
-
-
-            return data;
+            return QuickType.TradeHistory.FromJson(QuickType.JsonToString.GetString(site, FileName));
         }
     }
 }

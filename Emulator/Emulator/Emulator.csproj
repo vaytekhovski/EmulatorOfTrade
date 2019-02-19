@@ -115,6 +115,7 @@
     <Compile Include="Models\DBInitializer\ChartDataDbInitializer.cs" />
     <Compile Include="Models\DBInitializer\DownloadTradeHistory.cs" />
     <Compile Include="Models\Emulator\Emulator.cs" />
+    <Compile Include="Models\Emulator\Emulator2.cs" />
     <Compile Include="Models\OwnDataBase.cs" />
     <Compile Include="Models\Poloniex\Methods\Converter.cs" />
     <Compile Include="Models\Poloniex\Methods\JsonToString.cs" />
