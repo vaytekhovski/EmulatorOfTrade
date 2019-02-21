@@ -102,8 +102,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\ChartController.cs" />
-    <Compile Include="Controllers\Data\ClearController.cs" />
     <Compile Include="Controllers\Data\DataController.cs" />
     <Compile Include="Controllers\Data\DownloadController.cs" />
     <Compile Include="Controllers\Data\ShowController.cs" />
@@ -112,7 +110,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DBInitializer\ChartDataDbInitializer.cs" />
     <Compile Include="Models\DBInitializer\DownloadTradeHistory.cs" />
     <Compile Include="Models\Emulator\Emulator.cs" />
     <Compile Include="Models\Emulator\Emulator2.cs" />
@@ -130,7 +127,6 @@
     <Content Include="Views\web.config" />
     <None Include="packages.config" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Data\returnChartData.cshtml" />
     <Content Include="Views\Data\returnTradeHistory.cshtml" />
     <Content Include="Views\Shared\DataLayout.cshtml" />
     <Content Include="Views\Emulator\Main.cshtml" />
@@ -139,7 +135,6 @@
     <Content Include="Views\Emulator\Emulation.cshtml" />
     <Content Include="Views\Download\TradeHistoryDownload.cshtml" />
     <Content Include="Views\Show\ShowTradeHistiories.cshtml" />
-    <Content Include="Views\Clear\ClearTradeHistory.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
