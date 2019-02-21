@@ -110,7 +110,16 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DBInitializer\DownloadTradeHistory.cs" />
+    <Compile Include="Migrations\201902150914492_MigrateDB.cs" />
+    <Compile Include="Migrations\201902150914492_MigrateDB.Designer.cs">
+      <DependentUpon>201902150914492_MigrateDB.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\DataBase\DBModels\BTC_TH.cs" />
+    <Compile Include="Models\DataBase\DBModels\Coin_TH.cs" />
+    <Compile Include="Models\DataBase\DBModels\ETH_TH.cs" />
+    <Compile Include="Models\DataBase\DBModels\XRP_TH.cs" />
+    <Compile Include="Models\DataBase\DownloadTradeHistory.cs" />
     <Compile Include="Models\Emulator\Emulator.cs" />
     <Compile Include="Models\Emulator\Emulator2.cs" />
     <Compile Include="Models\OwnDataBase.cs" />
@@ -119,8 +128,7 @@
     <Compile Include="Models\Poloniex\Methods\LoadFromPoliniex.cs" />
     <Compile Include="Models\Poloniex\ChartData.cs" />
     <Compile Include="Models\Poloniex\TradeHistory.cs" />
-    <Compile Include="Models\DBInitializer\TradeContext.cs" />
-    <Compile Include="Models\DBInitializer\TradeHistoryDbInitializer.cs" />
+    <Compile Include="Models\DataBase\TradeContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +153,11 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201902150914492_MigrateDB.resx">
+      <DependentUpon>201902150914492_MigrateDB.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

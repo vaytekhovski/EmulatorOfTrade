@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Emulator.Models.DataBase.DBModels;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Emulator.Models.Emulator
     {
         public Emulator2() { }
 
-        List<QuickType.TradeHistory> DB = OwnDataBase.database.Histories.OrderBy(history => history.Date).ToList();
+        List<BTC_TH> DB = OwnDataBase.database.BTC_TradeHistory.OrderBy(history => history.Date).ToList();
 
         string Coin;
 
@@ -87,8 +88,7 @@ namespace Emulator.Models.Emulator
 
                 if (currentTime - elementTime >= checkTime)
                 {
-                    DB[i].Rate = DB[i].Rate.Replace('.', ',');
-                    rate = double.Parse(DB[i].Rate);
+                    rate = DB[i].Rate;
                     break;
                 }
             }
@@ -100,8 +100,7 @@ namespace Emulator.Models.Emulator
         {
             double rate = 0;
 
-            DB[index].Rate = DB[index].Rate.Replace('.', ',');
-            rate = double.Parse(DB[index].Rate);
+            rate = DB[index].Rate;
 
             return rate;
         }

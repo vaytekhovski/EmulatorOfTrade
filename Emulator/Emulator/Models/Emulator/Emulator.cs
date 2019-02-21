@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Threading;
 using System.Diagnostics;
+using Emulator.Models.DataBase.DBModels;
 
 namespace Emulator.Models.Emulator
 {
@@ -11,8 +12,10 @@ namespace Emulator.Models.Emulator
     {
         public Emulator() { }
 
-        List<QuickType.TradeHistory> orderedHistories = OwnDataBase.database.Histories.OrderBy(history => history.Date).ToList();
-        
+        //List<QuickType.TradeHistory> orderedHistories = OwnDataBase.database.BTC_TradeHistory.OrderBy(history => history.Date).ToList();
+
+        List<BTC_TH> orderedHistories = OwnDataBase.database.BTC_TradeHistory.OrderBy(history => history.Date).ToList();
+
         string Coin;
         
         DateTime StartTime, EndTime;
@@ -78,8 +81,7 @@ namespace Emulator.Models.Emulator
                 {
                     if (data.Date == currentTime)
                     {
-                        data.Rate = data.Rate.Replace('.', ',');
-                        value = double.Parse(data.Rate);
+                        value = data.Rate;
                         break;
                     }
                 }
@@ -89,8 +91,7 @@ namespace Emulator.Models.Emulator
                     {
                         if (item.Date > currentTime)
                         {
-                            item.Rate = item.Rate.Replace('.', ',');
-                            value = double.Parse(item.Rate);
+                            value = item.Rate;
                             break;
                         }
                     }
@@ -108,21 +109,18 @@ namespace Emulator.Models.Emulator
                 {
                     if (data.Date == currentTime)
                     {
-                        data.Total = data.Total.Replace('.', ',');
-                        data.Amount = data.Amount.Replace('.', ',');
-                        data.Rate = data.Rate.Replace('.', ',');
 
-                        feeUSD = 0.002 * double.Parse(data.Total);
-                        if (balanceUSD - feeUSD > double.Parse(data.Total))
+                        feeUSD = 0.002 * data.Total;
+                        if (balanceUSD - feeUSD > data.Total)
                         {
                             balanceUSD -= feeUSD;
 
-                            balanceUSD -= double.Parse(data.Total);
-                            balanceCoin += double.Parse(data.Amount);
+                            balanceUSD -= data.Total;
+                            balanceCoin += data.Amount;
                         }
                         else
                         {
-                            balanceCoin += ((balanceUSD - feeUSD) / double.Parse(data.Rate));
+                            balanceCoin += ((balanceUSD - feeUSD) / data.Rate);
                             balanceUSD = 0;
                         }
                         break;
@@ -132,22 +130,18 @@ namespace Emulator.Models.Emulator
                 {
                     if (data.Date > currentTime)
                     {
-                        data.Total = data.Total.Replace('.', ',');
-                        data.Amount = data.Amount.Replace('.', ',');
-                        data.Rate = data.Rate.Replace('.', ',');
-
-                        feeCoin = 0.002 * double.Parse(data.Amount);
-                        if (balanceCoin > double.Parse(data.Amount))
+                        feeCoin = 0.002 * data.Amount;
+                        if (balanceCoin > data.Amount)
                         {
                             balanceCoin -= feeCoin;
 
-                            balanceCoin -= double.Parse(data.Amount);
-                            balanceUSD += double.Parse(data.Total);
+                            balanceCoin -= data.Amount;
+                            balanceUSD += data.Total;
                             
                         }
                         else
                         {
-                            balanceUSD += ((balanceCoin - feeCoin) * double.Parse(data.Rate));
+                            balanceUSD += ((balanceCoin - feeCoin) * data.Rate);
                             balanceCoin = 0;
                         }
                         break;

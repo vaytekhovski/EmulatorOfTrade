@@ -1,4 +1,4 @@
-﻿@model IEnumerable<QuickType.TradeHistory>
+﻿
 
 
 @{
@@ -23,7 +23,7 @@
                 <td><p>Количество:</p></td>
                 <td><p>Всего:</p></td>
             </tr>
-            @foreach (var value in Model)
+            @foreach (var value in ViewBag.hist)
             {
                 <tr>
                     <td><p>@value.GlobalTradeId</p></td>
