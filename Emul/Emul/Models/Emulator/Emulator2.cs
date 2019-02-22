@@ -24,8 +24,9 @@ namespace Emulator.Models.Emulator
         double balanceUSD, balanceCoin;
         double feeUSD = 0, feeCoin = 0;
 
+        public double BalanceUSD { get => balanceUSD;}
 
-        public Emulator2(string _Coin, DateTime _StartTime, DateTime _EndTime, double _Diff, double _CheckTime, double _BuyTime, double _HoldTime, double _balance)
+        public void Settings(string _Coin, DateTime _StartTime, DateTime _EndTime, double _Diff, double _CheckTime, double _BuyTime, double _HoldTime, double _balance)
         {
             Coin = _Coin;
             StartTime = _StartTime;
@@ -35,11 +36,8 @@ namespace Emulator.Models.Emulator
             BuyTime = _BuyTime;
             HoldTime = _HoldTime;
             balanceUSD = _balance;
-
-            StartTime = new DateTime(_StartTime.Year, _StartTime.Month, _StartTime.Day, 0, 01, 00);
-
         }
-
+        
 
         public void MakeMoney()
         {

@@ -102,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\Data\ClearController.cs" />
     <Compile Include="Controllers\Data\DataController.cs" />
     <Compile Include="Controllers\Data\DownloadController.cs" />
     <Compile Include="Controllers\Data\ShowController.cs" />
@@ -143,6 +144,7 @@
     <Content Include="Views\Show\ShowTradeHistoriesETH.cshtml" />
     <Content Include="Views\Show\ShowTradeHistoriesXRP.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Clear\ClearTradeHistory.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -23,7 +23,7 @@ namespace Emulator.Models
             string site = "https://" + $"poloniex.com/public?command=returnTradeHistory&currencyPair={FirstPair}_{SecondPair}&start={UnixStartDate}&end={UnixEndDate}";
 
 
-            Debug.WriteLine($"Download trade history {_StartDate} : {_EndDate} ended");
+            
 
             return QuickType.TradeHistory.FromJson(QuickType.JsonToString.GetString(site, FileName));
         }
