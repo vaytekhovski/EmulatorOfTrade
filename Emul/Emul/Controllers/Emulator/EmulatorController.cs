@@ -20,7 +20,8 @@ namespace Emulator.Controllers
 
         public ActionResult Emulation(string Pair, DateTime StartDate, DateTime EndDate, string diff, string checkTime, string buyTime, string holdTime, string balance)
         {
-            Models.Emulator.Emulator2 emulator = new Models.Emulator.Emulator2(Pair, StartDate, EndDate, double.Parse(diff), double.Parse(checkTime), double.Parse(buyTime), double.Parse(holdTime), double.Parse(balance));
+            Models.Emulator.Emulator2 emulator = new Models.Emulator.Emulator2();
+            emulator.Settings(Pair, StartDate, EndDate, double.Parse(diff), double.Parse(checkTime), double.Parse(buyTime), double.Parse(holdTime), double.Parse(balance));
             emulator.MakeMoney();
             return View();
         }
