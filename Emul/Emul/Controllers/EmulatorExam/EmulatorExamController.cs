@@ -22,9 +22,7 @@ namespace Emul.Controllers.EmulatorExam
         public ActionResult Examination(string Pair, DateTime StartDate, DateTime EndDate, string diff, string checkTime, string buyTime, string holdTime, string balance)
         {
             Models.EmulatorExam.EmulatorExam emulator = new Models.EmulatorExam.EmulatorExam();
-
-            Models.Emulator.Emulator2 emulator = new Models.Emulator.Emulator2();
-            emulator.Settings(Pair, StartDate, EndDate, double.Parse(diff), double.Parse(checkTime), double.Parse(buyTime), double.Parse(holdTime), double.Parse(balance));
+            emulator.Settings(Pair, StartDate, EndDate, double.Parse(diffFrom), double.Parse(diffTo), double.Parse(diffStep), double.Parse(checkTimeFrom), double.Parse(checkTimeTo), double.Parse(checkTimeStep), double.Parse(buyTimeFrom), double.Parse(buyTimeTo), double.Parse(buyTimeStep), double.Parse(holdTimeFrom), double.Parse(holdTimeTo), double.Parse(holdTimeStep), double.Parse(balance));
             emulator.MakeMoney();
             return View();
         }
