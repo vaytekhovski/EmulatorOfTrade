@@ -119,11 +119,11 @@ namespace Emulator.Models.Emulator
                 lastIndex = i;
             }
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
            // Debug.WriteLine(DB[index].Date + " BUY " + balanceUSD);
-=======
+//=======
             //Debug.WriteLine(DB[index].Date + " BUY " + balanceUSD);
->>>>>>> Andrey
+//>>>>>>> Andrey
             return lastIndex;
         }
 
