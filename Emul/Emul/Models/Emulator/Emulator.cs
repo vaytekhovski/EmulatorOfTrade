@@ -12,8 +12,6 @@ namespace Emulator.Models.Emulator
     {
         public Emulator() { }
 
-        //List<QuickType.TradeHistory> orderedHistories = OwnDataBase.database.BTC_TradeHistory.OrderBy(history => history.Date).ToList();
-
         List<BTC_TH> orderedHistories = OwnDataBase.database.BTC_TradeHistory.OrderBy(history => history.Date).ToList();
 
         string Coin;

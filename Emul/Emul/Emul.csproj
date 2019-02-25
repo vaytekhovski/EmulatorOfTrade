@@ -106,6 +106,7 @@
     <Compile Include="Controllers\Data\DataController.cs" />
     <Compile Include="Controllers\Data\DownloadController.cs" />
     <Compile Include="Controllers\Data\ShowController.cs" />
+    <Compile Include="Controllers\EmulatorExam\EmulatorExamController.cs" />
     <Compile Include="Controllers\Emulator\EmulatorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -117,6 +118,7 @@
     <Compile Include="Models\DataBase\DBModels\XRP_TH.cs" />
     <Compile Include="Models\DataBase\DownloadTradeHistory.cs" />
     <Compile Include="Models\DataBase\TradeHistoryContext.cs" />
+    <Compile Include="Models\EmulatorExam\EmulatorExam.cs" />
     <Compile Include="Models\Emulator\Emulator.cs" />
     <Compile Include="Models\Emulator\Emulator2.cs" />
     <Compile Include="Models\DataBase\OwnDataBase.cs" />
@@ -145,6 +147,9 @@
     <Content Include="Views\Show\ShowTradeHistoriesXRP.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Clear\ClearTradeHistory.cshtml" />
+    <Content Include="Views\EmulatorExam\Examination.cshtml" />
+    <Content Include="Views\EmulatorExam\Main.cshtml" />
+    <Content Include="Views\Shared\EmulatorExamLayout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

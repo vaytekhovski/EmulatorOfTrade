@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+</head>
+
+
+
+<body>
+    <button>@Html.ActionLink("Home", "Index", "Home")</button>
+    <form method="post">
+        <select name="Pair">
+            <option value="BTC">USDT-BTC</option>
+            <option value="XRP">USDT-XRP</option>
+            <option value="ETH">USDT-ETH</option>
+        </select>
+        <input type="date" name="StartDate">
+        <input type="date" name="EndDate">
+        <br><br>
+
+        Difference: <br>
+        From  <input type="number" name="diffFrom" value="1,1" />% To <input type="number" name="diffTo" value="1,6" />%<br><br>
+        Difference step:<input type="number" name="diffStep" value="0,2" />%
+        <br><br><br>
+        Check time: <br>
+        From  <input type="number" name="checkTimeFrom" value="2" /> To <input type="number" name="checkTimeTo" value="6" /> minutes<br><br>
+        Check time step:<input type="number" name="checkTimeStep" value="1" /> minutes
+        <br><br><br>
+        Buy time: <br>
+        From  <input type="number" name="buyTimeFrom" value="1" /> To <input type="number" name="buycheckTimeTo" value="3" /> minutes<br><br>
+        Buy time step:<input type="number" name="buyTimeStep" value="5" /> minutes
+        <br><br><br>
+        Hold time:
+        From  <input type="number" name="holdTimeFrom" value="10" /> To <input type="number" name="holdTimeTo" value="20" /> minutes<br><br>
+        Hold time step:<input type="number" name="holdTimeStep" value="2" /> minutes
+        <br><br><br>
+        <label for="balance">Balance: </label>
+        <input type="text" name="balance" value="1000000" />$.
+        <br><br>
+
+        <input type="submit" name="Examination" value="Запуск" formaction="../EmulatorExam/Examitaion" formmethod="post" />
+    </form>
+
+    @RenderBody()
+</body>
+</html>
