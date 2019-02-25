@@ -1,8 +1,10 @@
-﻿namespace QuickType
+﻿using System.IO;
+using System.Net;
+using System.Text;
+
+namespace QuickType
 {
-    using System.IO;
-    using System.Net;
-    using System.Text;
+    
 
     public static class LoadFromPoliniex
     {

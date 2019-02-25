@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Web;
 
 namespace Emulator.Models.Emulator
 {
@@ -118,12 +116,7 @@ namespace Emulator.Models.Emulator
                     break;
                 lastIndex = i;
             }
-
-//<<<<<<< HEAD
-           // Debug.WriteLine(DB[index].Date + " BUY " + balanceUSD);
-//=======
-            //Debug.WriteLine(DB[index].Date + " BUY " + balanceUSD);
-//>>>>>>> Andrey
+            
             return lastIndex;
         }
 

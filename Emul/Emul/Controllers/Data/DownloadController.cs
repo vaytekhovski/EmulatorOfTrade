@@ -51,12 +51,7 @@ namespace Emulator.Controllers.Data
             do
             {
                 end = EndDate.AddDays(-j);
-
-                //if (start.AddDays(-10).Date < StartDate)
-                //    start = StartDate;
-                //else
-                //    start = end.AddDays(-10);
-
+                
                 start = start.AddDays(-10).Date < StartDate ? StartDate : end.AddDays(-10);
 
                 
@@ -95,12 +90,7 @@ namespace Emulator.Controllers.Data
                             for (int z = 0; z < eth_list.Count; z++)
                                 if (listETH[i].GlobalTradeId == eth_list[z].GlobalTradeId)
                                     eth_list.RemoveAt(z);
-
-                        //foreach (var DBitem in OwnDataBase.database.ETH_TradeHistory)
-                        //    for (int i = 0; i < eth_list.Count; i++)
-                        //        if (DBitem.GlobalTradeId == eth_list[i].GlobalTradeId)
-                        //            eth_list.RemoveAt(i);
-
+                        
                         OwnDataBase.database.ETH_TradeHistory.AddRange(eth_list);
                         Debug.WriteLine($"Download trade history {start.Date} : {end.Date} ended");
                         break;

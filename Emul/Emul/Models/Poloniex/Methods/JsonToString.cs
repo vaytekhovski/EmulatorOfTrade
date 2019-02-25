@@ -1,7 +1,9 @@
-﻿namespace QuickType
+﻿using System.IO;
+using System.Web.Hosting;
+
+namespace QuickType
 {
-    using System.IO;
-    using System.Web.Hosting;
+    
 
     public static class JsonToString
     {

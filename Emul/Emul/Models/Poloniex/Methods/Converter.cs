@@ -1,9 +1,10 @@
-﻿namespace QuickType
+﻿using System.Globalization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+
+namespace QuickType
 {
 
-    using System.Globalization;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
 
     internal static class Converter
     {

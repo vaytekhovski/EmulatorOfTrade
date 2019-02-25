@@ -6,7 +6,6 @@ namespace Emulator.Models
 {
     public class TradeHistoryContext : DbContext
     {
-        //public DbSet<TradeHistory> Histories { get; set; }
 
         public DbSet<BTC_TH> BTC_TradeHistory { get; set; }
         public DbSet<XRP_TH> XRP_TradeHistory { get; set; }
