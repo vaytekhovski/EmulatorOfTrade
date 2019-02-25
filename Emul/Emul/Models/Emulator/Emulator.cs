@@ -47,7 +47,7 @@ namespace Emulator.Models.Emulator
         public void MakeMoney()
         {
             DateTimeOffset lastSellTime = StartTime;
-
+            Debug.WriteLine(DateTime.Now + " " + balanceUSD);
             foreach (var item in orderedHistories)
             {
                 // если текущий момент позже времени последней продажи
@@ -69,6 +69,7 @@ namespace Emulator.Models.Emulator
                     }
                 }
             }
+            Debug.WriteLine(DateTime.Now + " " + balanceUSD);
         }
         
 
@@ -158,7 +159,7 @@ namespace Emulator.Models.Emulator
                 else if (data.Date >= currentTime.AddMinutes(BuyTime))
                     break;
 
-            Debug.WriteLine(currentTime + "  Buy" + " USD:" + balanceUSD + " Coin:" + balanceCoin);
+            //Debug.WriteLine(currentTime + "  Buy" + " USD:" + balanceUSD + " Coin:" + balanceCoin);
         }
 
 
@@ -171,7 +172,7 @@ namespace Emulator.Models.Emulator
                     else
                         break;
 
-            Debug.WriteLine(currentTime.AddMinutes(HoldTime) + " Sell" + " USD:" + balanceUSD + " Coin:" + balanceCoin);
+           // Debug.WriteLine(currentTime.AddMinutes(HoldTime) + " Sell" + " USD:" + balanceUSD + " Coin:" + balanceCoin);
         }
         
     }

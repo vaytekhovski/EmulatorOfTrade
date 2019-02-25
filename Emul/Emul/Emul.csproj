@@ -120,6 +120,7 @@
     <Compile Include="Models\Emulator\Emulator.cs" />
     <Compile Include="Models\Emulator\Emulator2.cs" />
     <Compile Include="Models\DataBase\OwnDataBase.cs" />
+    <Compile Include="Models\Emulator\Parser.cs" />
     <Compile Include="Models\Poloniex\ChartData.cs" />
     <Compile Include="Models\Poloniex\Methods\Converter.cs" />
     <Compile Include="Models\Poloniex\Methods\JsonToString.cs" />
