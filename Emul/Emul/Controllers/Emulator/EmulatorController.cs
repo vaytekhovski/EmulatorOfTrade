@@ -51,6 +51,7 @@ namespace Emulator.Controllers
             Models.Emulator.Emulator2 emulator = new Models.Emulator.Emulator2(Parser.DB);
             emulator.Settings(StartDate, EndDate, double.Parse(diff), double.Parse(checkTime), double.Parse(buyTime), double.Parse(holdTime), double.Parse(balance));
             emulator.MakeMoney();
+            ViewBag.balance = emulator.BalanceUSD;
             return View();
         }
     }

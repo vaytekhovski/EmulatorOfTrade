@@ -119,7 +119,7 @@ namespace Emulator.Models.Emulator
                 lastIndex = i;
             }
 
-            Debug.WriteLine(DB[index].Date + " BUY " + balanceUSD);
+            //Debug.WriteLine(DB[index].Date + " BUY " + balanceUSD);
             return lastIndex;
         }
 
@@ -154,7 +154,7 @@ namespace Emulator.Models.Emulator
                 }
                 lastIndex = i;
             }
-            Debug.WriteLine(DB[index].Date + " SELL " + balanceUSD);
+            //Debug.WriteLine(DB[index].Date + " SELL " + balanceUSD);
             return lastIndex;
         }
 
@@ -164,12 +164,13 @@ namespace Emulator.Models.Emulator
             bool diff = false;
 
             double cr = CurrentRate(index);
-            for (double checkLength = CheckTime; checkLength > 0; checkLength -= 0.5)
+            for (double checkLength = 0.5; checkLength < CheckTime; checkLength += 0.5)
             {
                 double ctr = CheckTimeRate(index, checkLength);
-                if (ctr < cr - (cr * PersentDiff))
+                if (ctr < cr - (cr * PersentDiff) &&  cr != 0 && ctr != 0)
                 {
                     diff = true;
+                    //Debug.WriteLine(ctr);
                     break;
                 }
             }
@@ -183,21 +184,18 @@ namespace Emulator.Models.Emulator
 
             int min = (int)checkLength;
             int sec = (((checkLength) - min) * 10) == 5 ? 30 : 0;
+            
+            DateTimeOffset checkTime = DB[index].Date.AddMinutes(-min).AddSeconds(-sec);
 
-            DateTimeOffset currentTime = DB[index].Date;
-            TimeSpan checkTime = new TimeSpan(0, min, sec);
-            DateTimeOffset elementTime;
-
-            for (int i = index; i >= 0; i--)
+            for(int i = index; i > 0; i--)
             {
-                elementTime = DB[i].Date;
-
-                if (currentTime - elementTime >= checkTime && DB[i].Type == "Sell")
+                if(DB[i].Date < checkTime && DB[i].Rate != 0)
                 {
                     rate = DB[i].Rate;
                     break;
                 }
             }
+            
             
             return rate;
         }
