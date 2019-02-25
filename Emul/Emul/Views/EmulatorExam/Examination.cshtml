@@ -12,6 +12,14 @@
 </head>
 <body>
     <div>
+        <table>
+            @foreach (var value in ViewBag.balances)
+            {
+                <tr>
+                    <td><p>@value</p></td>
+                </tr>
+            }
+        </table>
     </div>
 </body>
 </html>

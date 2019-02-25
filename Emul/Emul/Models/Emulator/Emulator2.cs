@@ -83,7 +83,7 @@ namespace Emulator.Models.Emulator
                     index = Sell(index);
                 }
             }
-            //Debug.WriteLine(DateTime.Now + " " + balanceUSD);
+            Debug.WriteLine(balanceUSD);
         }
         
 
@@ -119,7 +119,7 @@ namespace Emulator.Models.Emulator
                 lastIndex = i;
             }
 
-            Debug.WriteLine(DB[index].Date + " BUY " + balanceUSD);
+           // Debug.WriteLine(DB[index].Date + " BUY " + balanceUSD);
             return lastIndex;
         }
 
@@ -154,7 +154,7 @@ namespace Emulator.Models.Emulator
                 }
                 lastIndex = i;
             }
-            Debug.WriteLine(DB[index].Date + " SELL " + balanceUSD);
+            //Debug.WriteLine(DB[index].Date + " SELL " + balanceUSD);
             return lastIndex;
         }
 
