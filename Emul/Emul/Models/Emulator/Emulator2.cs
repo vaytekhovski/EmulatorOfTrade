@@ -11,13 +11,11 @@ namespace Emulator.Models.Emulator
     {
         public Emulator2() { }
 
-        List<BTC_TH> DB = OwnDataBase.database.BTC_TradeHistory.OrderBy(history => history.Date).ToList();
-
-        string Coin;
-
+        List<Coin_TH> DB = new List<Coin_TH>();
+        
         DateTime StartTime, EndTime;
 
-        double Diff;
+        double Diff, PersentDiff;
 
         double CheckTime, BuyTime, HoldTime;
 
@@ -26,45 +24,155 @@ namespace Emulator.Models.Emulator
 
         public double BalanceUSD { get => balanceUSD;}
 
-        public void Settings(string _Coin, DateTime _StartTime, DateTime _EndTime, double _Diff, double _CheckTime, double _BuyTime, double _HoldTime, double _balance)
+        private int startIndex;
+        private int lastIndex;
+
+        public Emulator2(List<Coin_TH> _DB)
         {
-            Coin = _Coin;
+            DB = _DB;
+        }
+
+        public void Settings(DateTime _StartTime, DateTime _EndTime, double _Diff, double _CheckTime, double _BuyTime, double _HoldTime, double _balance)
+        {
             StartTime = _StartTime;
             EndTime = _EndTime;
             Diff = _Diff;
+            PersentDiff = Diff / 100;
             CheckTime = _CheckTime;
             BuyTime = _BuyTime;
             HoldTime = _HoldTime;
             balanceUSD = _balance;
+
+            generateStartIndex();
+            generateLastIndex();
+        }
+
+        private void generateStartIndex()
+        {
+            for (int i = 0; i < DB.Count; i++)
+            {
+                if (DB[i].Date > StartTime)
+                {
+                    startIndex = i;
+                    break;
+                }
+            }
+        }
+
+        private void generateLastIndex()
+        {
+            for(int i = startIndex; i < DB.Count; i++)
+            {
+                if(DB[i].Date > EndTime)
+                {
+                    lastIndex = i;
+                    break;
+                }
+            }
         }
         
 
         public void MakeMoney()
         {
-            for(int index = 0; index < DB.Count; index++)
+            //Debug.WriteLine(DateTime.Now + " " + balanceUSD);
+            for (int index = startIndex; index < lastIndex; index++)
             {
-                if(IsDiff(index))
+                if(IsDiff(index) && DB[index].Type == "Sell")
                 {
-
+                    index = Buy(index);
+                    index = Sell(index);
                 }
             }
+            //Debug.WriteLine(DateTime.Now + " " + balanceUSD);
+        }
+        
+
+        private int Buy(int index)
+        {
+            int lastIndex = 0;
+            DateTimeOffset currentTime = DB[index].Date;
+            for (int i = index; i < DB.Count; i++)
+            {
+                if(currentTime.AddMinutes((int)BuyTime) < DB[i].Date)
+                {
+                    break;
+                }
+                else if (DB[i].Type == "Sell")
+                {
+                    feeUSD = 0.002 * DB[i].Total;
+                    if (balanceUSD - feeUSD > DB[i].Total)
+                    {
+                        balanceUSD -= feeUSD;
+
+                        balanceUSD -= DB[i].Total;
+                        balanceCoin += DB[i].Amount;
+                    }
+                    else
+                    {
+                        balanceCoin += ((balanceUSD - feeUSD) / DB[i].Rate);
+                        balanceUSD = 0;
+                    }
+                }
+
+                if (balanceUSD == 0)
+                    break;
+                lastIndex = i;
+            }
+
+            Debug.WriteLine(DB[index].Date + " BUY " + balanceUSD);
+            return lastIndex;
+        }
+
+        private int Sell(int index)
+        {
+            int lastIndex = 0;
+            DateTimeOffset currentTime = DB[index].Date;
+            for (int i = index; i < DB.Count; i++)
+            {
+                if (currentTime.AddMinutes((int)HoldTime) < DB[i].Date)
+                {
+                    if (DB[i].Type == "Buy")
+                    {
+                        feeCoin = 0.002 * DB[i].Amount;
+                        if (balanceCoin > DB[i].Amount)
+                        {
+                            balanceCoin -= feeCoin;
+
+                            balanceCoin -= DB[i].Amount;
+                            balanceUSD += DB[i].Total;
+
+                        }
+                        else
+                        {
+                            balanceUSD += ((balanceCoin - feeCoin) * DB[i].Rate);
+                            balanceCoin = 0;
+                        }
+                    }
+
+                    if (balanceCoin == 0)
+                        break;
+                }
+                lastIndex = i;
+            }
+            Debug.WriteLine(DB[index].Date + " SELL " + balanceUSD);
+            return lastIndex;
         }
 
         private bool IsDiff(int index)
         {
+
             bool diff = false;
-            double diffValue = 0;
 
             double cr = CurrentRate(index);
-            Debug.WriteLine(cr);
             for (double checkLength = CheckTime; checkLength > 0; checkLength -= 0.5)
             {
                 double ctr = CheckTimeRate(index, checkLength);
-                Debug.WriteLine(ctr);
+                if (ctr < cr - (cr * PersentDiff))
+                {
+                    diff = true;
+                    break;
+                }
             }
-            Debug.WriteLine(" ");
-            Debug.WriteLine(" ");
-            Debug.WriteLine(" ");
 
             return diff;
         }
@@ -84,7 +192,7 @@ namespace Emulator.Models.Emulator
             {
                 elementTime = DB[i].Date;
 
-                if (currentTime - elementTime >= checkTime)
+                if (currentTime - elementTime >= checkTime && DB[i].Type == "Sell")
                 {
                     rate = DB[i].Rate;
                     break;
