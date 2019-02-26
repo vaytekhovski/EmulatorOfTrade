@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Emulator.Models.Emulator;
 using System;
 using System.Diagnostics;
+using Emulator.Models;
 
 namespace Emul.Models.EmulatorExam
 {
@@ -10,6 +11,7 @@ namespace Emul.Models.EmulatorExam
     {
         List<Coin_TH> DB = new List<Coin_TH>();
         public List<Examination> examinations = new List<Examination>();
+        
 
         public EmulatorExam(List<Coin_TH> _DB)
         {
@@ -56,7 +58,7 @@ namespace Emul.Models.EmulatorExam
                     {
                         for (double l = holdTimeFrom; l < holdTimeTo; l += holdTimeStep)
                         {
-                            Debug.WriteLine($"Starting emulation with diff: {i}, checkTime: {j}, buyTime: {k}, holdTime: {l}");
+                            //Debug.WriteLine($"Starting emulation with diff: {i}, checkTime: {j}, buyTime: {k}, holdTime: {l}");
                             emulator.Settings(StartDate, EndDate, i, j, k, l, balance);
                             emulator.MakeMoney();
                             examinations.Add(new Examination {
@@ -68,6 +70,8 @@ namespace Emul.Models.EmulatorExam
                                 HoldTime = l,
                                 Balance = emulator.BalanceUSD
                             });
+                            OwnDataBase.database.Examinations.Add(examinations[examinations.Count - 1]);
+                            OwnDataBase.database.SaveChanges();
                         }
                     }
                 }

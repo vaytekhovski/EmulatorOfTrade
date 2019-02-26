@@ -1,4 +1,6 @@
 ﻿
+using System;
+
 namespace Emulator.Models.DataBase.DBModels
 {
     public class Coin_TH

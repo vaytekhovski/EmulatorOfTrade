@@ -81,7 +81,7 @@ namespace Emulator.Models.Emulator
                     index = Sell(index);
                 }
             }
-            Debug.WriteLine(balanceUSD);
+            //Debug.WriteLine(balanceUSD);
         }
         
 
