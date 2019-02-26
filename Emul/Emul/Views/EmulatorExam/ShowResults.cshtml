@@ -1,0 +1,40 @@
+﻿
+@{
+    Layout = "~/Views/Shared/EmulatorExamLayout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Examination</title>
+</head>
+<body>
+    <div>
+        <table>
+            <tr>
+                <td><p>Дата начала: </p></td>
+                <td><p>Дата конца: </p></td>
+                <td><p>Дифф: </p></td>
+                <td><p>Чек тайм: </p></td>
+                <td><p>Бай тайм: </p></td>
+                <td><p>Холд тайм: </p></td>
+                <td><p>Баланс: </p></td>
+            </tr>
+            @foreach (var value in ViewBag.examinations)
+            {
+                <tr>
+                    <td><p>@value.StartDate</p></td>
+                    <td><p>@value.EndDate</p></td>
+                    <td><p>@value.Diff</p></td>
+                    <td><p>@value.CheckTime</p></td>
+                    <td><p>@value.BuyTime</p></td>
+                    <td><p>@value.HoldTime</p></td>
+                    <td><p>@value.Balance</p></td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

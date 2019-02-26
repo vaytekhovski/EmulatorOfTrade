@@ -151,6 +151,7 @@
     <Content Include="Views\EmulatorExam\Examination.cshtml" />
     <Content Include="Views\EmulatorExam\Main.cshtml" />
     <Content Include="Views\Shared\EmulatorExamLayout.cshtml" />
+    <Content Include="Views\EmulatorExam\ShowResults.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
