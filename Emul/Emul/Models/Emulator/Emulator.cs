@@ -51,7 +51,7 @@ namespace Emulator.Models.Emulator
                 // если текущий момент позже времени последней продажи
                 if (item.Date > lastSellTime)
                 {
-                    for (double tempCheckTime = CheckTime; tempCheckTime > 0; tempCheckTime -= 0.5)
+                      for (double tempCheckTime = CheckTime; tempCheckTime > 0; tempCheckTime -= 0.5)
                     {
                         bool isDiff = ReturnCourseValue(item.Date, "Sell") / ReturnCourseValue(item.Date.AddMinutes(-tempCheckTime), "Sell") >= Diff;
 

@@ -1,4 +1,5 @@
-﻿using Emulator.Models.DataBase.DBModels;
+﻿using Emul.Models.DataBase.DBModels;
+using Emulator.Models.DataBase.DBModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,6 +11,7 @@ namespace Emulator.Models.Emulator
         public Emulator2() { }
 
         List<Coin_TH> DB = new List<Coin_TH>();
+        public List<TH> TradeHistory = new List<TH>();
         
         DateTime StartTime, EndTime;
 
@@ -24,6 +26,8 @@ namespace Emulator.Models.Emulator
 
         private int startIndex;
         private int lastIndex;
+
+        private double totalAmount, totalTotal, totalFee, ABSRate;
 
         public Emulator2(List<Coin_TH> _DB)
         {
@@ -72,6 +76,8 @@ namespace Emulator.Models.Emulator
 
         public void MakeMoney()
         {
+            var SW = new Stopwatch();
+            SW.Start();
             //Debug.WriteLine(DateTime.Now + " " + balanceUSD);
             for (int index = startIndex; index < lastIndex; index++)
             {
@@ -81,12 +87,19 @@ namespace Emulator.Models.Emulator
                     index = Sell(index);
                 }
             }
-            //Debug.WriteLine(balanceUSD);
+
+            SW.Stop();
+            var time = SW.ElapsedMilliseconds;
+            Debug.WriteLine(time);
         }
         
 
         private int Buy(int index)
         {
+            totalAmount = 0;
+            totalFee = 0;
+            totalTotal = 0;
+            ABSRate = 0;
             int lastIndex = 0;
             DateTimeOffset currentTime = DB[index].Date;
             for (int i = index; i < DB.Count; i++)
@@ -98,30 +111,49 @@ namespace Emulator.Models.Emulator
                 else if (DB[i].Type == "Sell")
                 {
                     feeUSD = 0.002 * DB[i].Total;
+                    totalFee += feeUSD;
                     if (balanceUSD - feeUSD > DB[i].Total)
                     {
                         balanceUSD -= feeUSD;
 
                         balanceUSD -= DB[i].Total;
+                        totalTotal += DB[i].Total;
                         balanceCoin += DB[i].Amount;
+                        totalAmount += DB[i].Amount;
                     }
                     else
                     {
                         balanceCoin += ((balanceUSD - feeUSD) / DB[i].Rate);
+                        totalAmount += ((balanceUSD - feeUSD) / DB[i].Rate);
                         balanceUSD = 0;
                     }
+                    ABSRate = ABSRate == 0 ? DB[i].Rate : (DB[i].Rate + ABSRate) / 2;
                 }
 
                 if (balanceUSD == 0)
                     break;
                 lastIndex = i;
             }
-            
+            TradeHistory.Add(new TH
+            {
+                Date = currentTime,
+                Type = "Buy",
+                Rate = ABSRate,
+                Amount = totalAmount,
+                Total = totalTotal,
+                Fee = totalFee,
+                Balance = BalanceUSD
+            });
             return lastIndex;
         }
 
         private int Sell(int index)
         {
+            totalAmount = 0;
+            totalFee = 0;
+            totalTotal = 0;
+            ABSRate = 0;
+
             int lastIndex = 0;
             DateTimeOffset currentTime = DB[index].Date;
             for (int i = index; i < DB.Count; i++)
@@ -131,19 +163,24 @@ namespace Emulator.Models.Emulator
                     if (DB[i].Type == "Buy")
                     {
                         feeCoin = 0.002 * DB[i].Amount;
+                        totalFee += feeCoin;
                         if (balanceCoin > DB[i].Amount)
                         {
                             balanceCoin -= feeCoin;
 
                             balanceCoin -= DB[i].Amount;
+                            totalAmount += DB[i].Amount;
                             balanceUSD += DB[i].Total;
+                            totalTotal += DB[i].Total;
 
                         }
                         else
                         {
                             balanceUSD += ((balanceCoin - feeCoin) * DB[i].Rate);
+                            totalTotal += ((balanceCoin - feeCoin) * DB[i].Rate);
                             balanceCoin = 0;
                         }
+                        ABSRate = ABSRate == 0 ? DB[i].Rate : (DB[i].Rate + ABSRate) / 2;
                     }
 
                     if (balanceCoin == 0)
@@ -151,6 +188,16 @@ namespace Emulator.Models.Emulator
                 }
                 lastIndex = i;
             }
+            TradeHistory.Add(new TH
+            {
+                Date = currentTime,
+                Type = "Sell",
+                Rate = ABSRate,
+                Amount = totalAmount,
+                Total = totalTotal,
+                Fee = totalFee,
+                Balance = BalanceUSD
+            });
             //Debug.WriteLine(DB[index].Date + " SELL " + balanceUSD);
             return lastIndex;
         }

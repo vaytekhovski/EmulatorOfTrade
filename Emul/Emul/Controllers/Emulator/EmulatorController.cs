@@ -52,6 +52,7 @@ namespace Emulator.Controllers
             emulator.Settings(StartDate, EndDate, double.Parse(diff), double.Parse(checkTime), double.Parse(buyTime), double.Parse(holdTime), double.Parse(balance));
             emulator.MakeMoney();
             ViewBag.balance = emulator.BalanceUSD;
+            ViewBag.TradeHistory = emulator.TradeHistory;
             return View();
         }
     }
