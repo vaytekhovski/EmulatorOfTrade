@@ -55,6 +55,13 @@ namespace Emul.Controllers.EmulatorExam
             emulatorexam.StartExamination();
             ViewBag.examinations = emulatorexam.examinations;
             return View();
+          
+        }
+
+        public ActionResult ShowResults()
+        {
+            ViewBag.examinations = OwnDataBase.database.Examinations;
+            return View();
         }
     }
 
