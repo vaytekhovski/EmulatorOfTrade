@@ -113,19 +113,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DataBase\DBModels\BTC_TH.cs" />
     <Compile Include="Models\DataBase\DBModels\Coin_TH.cs" />
-    <Compile Include="Models\DataBase\DBModels\ETH_TH.cs" />
     <Compile Include="Models\DataBase\DBModels\TH.cs" />
-    <Compile Include="Models\DataBase\DBModels\XRP_TH.cs" />
     <Compile Include="Services\DownloadTradeHistory.cs" />
     <Compile Include="Services\TradeHistoryContext.cs" />
     <Compile Include="Models\EmulatorExam\EmulatorExam.cs" />
     <Compile Include="Models\EmulatorExam\Examination.cs" />
-    <Compile Include="Models\Emulator\Emulator.cs" />
     <Compile Include="Models\Emulator\Emulator2.cs" />
     <Compile Include="Services\OwnDataBase.cs" />
-    <Compile Include="Models\Emulator\Parser.cs" />
     <Compile Include="Models\Poloniex\ChartData.cs" />
     <Compile Include="Models\Poloniex\Methods\Converter.cs" />
     <Compile Include="Models\Poloniex\Methods\JsonToString.cs" />
@@ -145,9 +140,6 @@
     <Content Include="Views\Shared\DataLayout.cshtml" />
     <Content Include="Views\Shared\EmulatorLayout.cshtml" />
     <Content Include="Views\Show\ShowTradeHistiories.cshtml" />
-    <Content Include="Views\Show\ShowTradeHistioriesBTC.cshtml" />
-    <Content Include="Views\Show\ShowTradeHistoriesETH.cshtml" />
-    <Content Include="Views\Show\ShowTradeHistoriesXRP.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Clear\ClearTradeHistory.cshtml" />
     <Content Include="Views\EmulatorExam\Examination.cshtml" />

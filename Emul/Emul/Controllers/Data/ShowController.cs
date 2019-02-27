@@ -17,27 +17,26 @@ namespace Emulator.Controllers.Data
 
         public ActionResult ShowTradeHistiories(string Pair)
         {
-            IEnumerable<BTC_TH> btc_histories = OwnDataBase.database.BTC_TradeHistory;
-            IEnumerable<XRP_TH> xrp_histories = OwnDataBase.database.XRP_TradeHistory;
-            IEnumerable<ETH_TH> eth_histories = OwnDataBase.database.ETH_TradeHistory;
+            IEnumerable<Coin_TH> histories = OwnDataBase.database.TradeHistory;
+     
             switch (Pair)
             {
                 case "BTC":
                     {
-                        btc_histories = OwnDataBase.database.BTC_TradeHistory.SqlQuery("select * from BTC_TH Order by [Date]");
-                        ViewBag.hist = btc_histories;
+                       histories = OwnDataBase.database.TradeHistory.SqlQuery("select * from Coin_TH where CurrencyName = 'BTC' order by [Date] ");
+                        ViewBag.hist = histories;
                     }
                     break;
                 case "XRP":
                     {
-                        xrp_histories = OwnDataBase.database.XRP_TradeHistory.SqlQuery("select * from XRP_TH Order by [Date]");
-                        ViewBag.hist = xrp_histories;
+                        histories = OwnDataBase.database.TradeHistory.SqlQuery("select * from Coin_TH where CurrencyName = 'XRP' order by [Date] ");
+                        ViewBag.hist = histories;
                     }
                     break;
                 case "ETH":
                     {
-                        eth_histories = OwnDataBase.database.ETH_TradeHistory.SqlQuery("select * from ETH_TH Order by [Date]");
-                        ViewBag.hist = eth_histories;
+                        histories = OwnDataBase.database.TradeHistory.SqlQuery("select * from Coin_TH where CurrencyName = 'ETH' order by [Date] ");
+                        ViewBag.hist = histories;
                     }
                     break;
                 default:

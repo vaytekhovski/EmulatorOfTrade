@@ -19,13 +19,13 @@ namespace Emul.Controllers.Data
             switch (Pair)
             {
                 case "BTC":
-                    OwnDataBase.database.BTC_TradeHistory.SqlQuery("delete from BTC_TH where id > 0");
+                    OwnDataBase.database.TradeHistory.SqlQuery("delete from Coin_TH where CurrencyName =  'BTC' ");
                     break;
                 case "XRP":
-                    OwnDataBase.database.XRP_TradeHistory.SqlQuery("delete from XRP_TH where id > 0");
+                    OwnDataBase.database.TradeHistory.SqlQuery("delete from Coin_TH where CurrencyName = 'XRP' ");
                     break;
                 case "ETH":
-                    OwnDataBase.database.ETH_TradeHistory.SqlQuery("delete from ETH_TH where id > 0");
+                    OwnDataBase.database.TradeHistory.SqlQuery("delete from Coin_TH where CurrencyName = 'ETH' ");
                     break;
                 default:
                     break;
