@@ -8,26 +8,39 @@ namespace Emulator.Models.Emulator
 {
     public class Emulator2
     {
-        public Emulator2() { }
-
-        List<Coin_TH> DB = new List<Coin_TH>();
         public List<TH> TradeHistory = new List<TH>();
+
+        public double BalanceUSD { get => balanceUSD; }
+
         
-        DateTime StartTime, EndTime;
+        private List<Coin_TH> DB = new List<Coin_TH>();
 
-        double Diff, PersentDiff;
+        private DateTime StartTime;
+        private DateTime EndTime;
 
-        double CheckTime, BuyTime, HoldTime;
+        private double Diff;
+        private double PersentDiff;
 
-        double balanceUSD, balanceCoin;
-        double feeUSD = 0, feeCoin = 0;
+        private double CheckTime;
+        private double BuyTime;
+        private double HoldTime;
 
-        public double BalanceUSD { get => balanceUSD;}
+        private double balanceUSD;
+        private double balanceCoin;
+
+        private double feeUSD;
+        private double feeCoin;
 
         private int startIndex;
         private int lastIndex;
 
-        private double totalAmount, totalTotal, totalFee, ABSRate;
+        private double totalAmount;
+        private double totalTotal;
+        private double totalFee;
+        private double ABSRate;
+
+
+        public Emulator2() { }
 
         public Emulator2(List<Coin_TH> _DB)
         {

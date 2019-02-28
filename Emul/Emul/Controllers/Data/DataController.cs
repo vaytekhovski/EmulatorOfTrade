@@ -16,7 +16,6 @@ namespace Emulator.Controllers
 
         public ActionResult Main()
         {
-            //Database.SetInitializer(new TradeHistoryDbInitializer());
             return View();
         }
         

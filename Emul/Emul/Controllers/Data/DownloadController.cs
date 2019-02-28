@@ -39,20 +39,16 @@ namespace Emulator.Controllers.Data
                                 
                 var lst = DownloadTradeHistory.CycleDownloadData(start, end, Pair);
                 Debug.WriteLine($"Download trade history {start.Date} : {end.Date} started");
-                switch (Pair)
-                {
-                    case "BTC": ConvertToTH(lst, "BTC"); break;
-                    case "XRP": ConvertToTH(lst, "XRP"); break;
-                    case "ETH": ConvertToTH(lst, "ETH"); break;
-                }
-                        
-                        for (int i = 0; i < listTH.Count; i++)
-                            for (int z = 0; z < th_list.Count; z++)
-                                if (listTH[i].GlobalTradeId == th_list[z].GlobalTradeId)
-                                    th_list.RemoveAt(z);
 
-                        OwnDataBase.database.TradeHistory.AddRange(th_list);
-                        Debug.WriteLine($"Download trade history {start.Date} : {end.Date} ended");
+                ConvertToTH(lst, Pair);
+                        
+                for (int i = 0; i < listTH.Count; i++)
+                    for (int z = 0; z < th_list.Count; z++)
+                        if (listTH[i].GlobalTradeId == th_list[z].GlobalTradeId)
+                            th_list.RemoveAt(z);
+
+                OwnDataBase.database.TradeHistory.AddRange(th_list);
+                Debug.WriteLine($"Download trade history {start.Date} : {end.Date} ended");
                        
                 OwnDataBase.database.SaveChanges();
 

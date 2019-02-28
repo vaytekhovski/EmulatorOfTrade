@@ -18,30 +18,10 @@ namespace Emulator.Controllers.Data
         public ActionResult ShowTradeHistiories(string Pair)
         {
             IEnumerable<Coin_TH> histories = OwnDataBase.database.TradeHistory;
-     
-            switch (Pair)
-            {
-                case "BTC":
-                    {
-                       histories = OwnDataBase.database.TradeHistory.SqlQuery("select * from Coin_TH where CurrencyName = 'BTC' order by [Date] ");
-                        ViewBag.hist = histories;
-                    }
-                    break;
-                case "XRP":
-                    {
-                        histories = OwnDataBase.database.TradeHistory.SqlQuery("select * from Coin_TH where CurrencyName = 'XRP' order by [Date] ");
-                        ViewBag.hist = histories;
-                    }
-                    break;
-                case "ETH":
-                    {
-                        histories = OwnDataBase.database.TradeHistory.SqlQuery("select * from Coin_TH where CurrencyName = 'ETH' order by [Date] ");
-                        ViewBag.hist = histories;
-                    }
-                    break;
-                default:
-                    break;
-            }
+
+            histories = OwnDataBase.database.TradeHistory.SqlQuery($"select * from Coin_TH where CurrencyName = '{Pair}' order by [Date] ");
+            ViewBag.hist = histories;
+
             return View();
         }
     }

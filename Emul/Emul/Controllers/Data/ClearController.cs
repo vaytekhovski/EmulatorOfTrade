@@ -16,22 +16,11 @@ namespace Emul.Controllers.Data
 
         public ActionResult ClearTradeHistory(string Pair)
         {
-            switch (Pair)
-            {
-                case "BTC":
-                    OwnDataBase.database.TradeHistory.SqlQuery("delete from Coin_TH where CurrencyName =  'BTC' ");
-                    break;
-                case "XRP":
-                    OwnDataBase.database.TradeHistory.SqlQuery("delete from Coin_TH where CurrencyName = 'XRP' ");
-                    break;
-                case "ETH":
-                    OwnDataBase.database.TradeHistory.SqlQuery("delete from Coin_TH where CurrencyName = 'ETH' ");
-                    break;
-                default:
-                    break;
-            }
+            var deleteList = OwnDataBase.database.TradeHistory.Where(o => o.CurrencyName == Pair);
+            OwnDataBase.database.TradeHistory.RemoveRange(deleteList);
 
             OwnDataBase.database.SaveChanges();
+
             ViewBag.status = $"Clear trade history {Pair} ended";
             return View();
         }
