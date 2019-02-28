@@ -1,4 +1,5 @@
 ﻿using Emulator.Models;
+using Emulator.Models.DataBase.DBModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,8 +17,8 @@ namespace Emul.Controllers.Data
 
         public ActionResult ClearTradeHistory(string Pair)
         {
-            var deleteList = OwnDataBase.database.TradeHistory.Where(o => o.CurrencyName == Pair);
-            OwnDataBase.database.TradeHistory.RemoveRange(deleteList);
+            OwnDataBase.database.TradeHistory.RemoveRange(OwnDataBase.database.TradeHistory.Where(o => o.CurrencyName == Pair));
+            
             OwnDataBase.database.SaveChanges();
 
             ViewBag.status = $"Clear trade history {Pair} ended";

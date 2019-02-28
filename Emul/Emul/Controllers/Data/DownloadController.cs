@@ -31,18 +31,19 @@ namespace Emulator.Controllers.Data
             int j = 0;
             do
             {
-                Debug.WriteLine($"{DateTime.Now} Download trade history {start.Date} : {end.Date} started");
-                
                 end = EndDate.AddDays(-j);
                 
                 start = start.AddDays(-10).Date < StartDate ? StartDate : end.AddDays(-10);
 
+                Debug.WriteLine($"{DateTime.Now} Download trade history {start.Date} : {end.Date} started");
+
                 ConvertToTH(DownloadTradeHistory.CycleDownloadData(start, end, Pair), Pair);
                         
                 for (int i = 0; i < DB.Count; i++)
-                    for (int z = 0; z < th_list.Count; z++)
-                        if (DB[i].GlobalTradeId == th_list[z].GlobalTradeId)
-                            th_list.RemoveAt(z);
+                    if(DB[i].Type == Pair)
+                        for (int z = 0; z < th_list.Count; z++)
+                            if (DB[i].GlobalTradeId == th_list[z].GlobalTradeId)
+                                th_list.RemoveAt(z);
 
                 OwnDataBase.database.TradeHistory.AddRange(th_list);
                 OwnDataBase.database.SaveChanges();
@@ -53,6 +54,7 @@ namespace Emulator.Controllers.Data
             } while (start != StartDate);
             
             ViewBag.status = $"Download trade history {Pair} ended";
+            th_list.Clear();
             return View();
         }
 

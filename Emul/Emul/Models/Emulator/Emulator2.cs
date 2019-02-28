@@ -11,7 +11,6 @@ namespace Emulator.Models.Emulator
         public List<TH> TradeHistory = new List<TH>();
 
         public double BalanceUSD { get => balanceUSD; }
-
         
         private List<Coin_TH> DB = new List<Coin_TH>();
 
