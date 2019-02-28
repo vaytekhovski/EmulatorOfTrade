@@ -3,8 +3,6 @@ using System.Web.Hosting;
 
 namespace QuickType
 {
-    
-
     public static class JsonToString
     {
         public static string GetString(string site, string fileName)

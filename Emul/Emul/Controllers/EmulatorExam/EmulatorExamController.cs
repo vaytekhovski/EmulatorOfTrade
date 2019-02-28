@@ -22,13 +22,14 @@ namespace Emul.Controllers.EmulatorExam
 
         public ActionResult Examination(string Pair, DateTime StartDate, DateTime EndDate, string diffFrom, string diffTo, string diffStep, string checkTimeFrom, string checkTimeTo, string checkTimeStep, string buyTimeFrom, string buyTimeTo, string buyTimeStep, string holdTimeFrom, string holdTimeTo, string holdTimeStep, string balance)
         {
-
             List<Coin_TH> Coin_DB = new List<Coin_TH>();
             Coin_DB = OwnDataBase.database.TradeHistory.OrderBy(history => history.Date).ToList();
 
             Models.EmulatorExam.EmulatorExam emulatorexam = new Models.EmulatorExam.EmulatorExam(Coin_DB);
+
             emulatorexam.Settings(StartDate, EndDate, double.Parse(diffFrom), double.Parse(diffTo), double.Parse(diffStep), double.Parse(checkTimeFrom), double.Parse(checkTimeTo), double.Parse(checkTimeStep), double.Parse(buyTimeFrom), double.Parse(buyTimeTo), double.Parse(buyTimeStep), double.Parse(holdTimeFrom), double.Parse(holdTimeTo), double.Parse(holdTimeStep), double.Parse(balance));
             emulatorexam.StartExamination();
+
             ViewBag.examinations = emulatorexam.examinations;
             return View();
           

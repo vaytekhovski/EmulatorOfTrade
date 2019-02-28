@@ -4,11 +4,8 @@ using Newtonsoft.Json;
 
 namespace QuickType
 {
-    
-
     public partial class TradeHistory
     {
-
         [JsonProperty("globalTradeID")]
         public long GlobalTradeId { get; set; }
 
@@ -35,9 +32,8 @@ namespace QuickType
 
     public partial class TradeHistory
     {
-        public static List<TradeHistory> FromJson(string json) => JsonConvert.DeserializeObject<List<TradeHistory>>(json, QuickType.Converter.Settings);
+        public static List<TradeHistory> FromJson(string json) => JsonConvert.DeserializeObject<List<TradeHistory>>(json, Converter.Settings);
     }
-
 
     internal class TypeEnumConverter : JsonConverter
     {

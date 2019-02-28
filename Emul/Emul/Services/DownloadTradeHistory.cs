@@ -1,13 +1,15 @@
-﻿using System;
+﻿using QuickType;
+using System;
 using System.Collections.Generic;
 
 namespace Emulator.Models
 {
     public static class DownloadTradeHistory
     {
-        private static string FirstPair, SecondPair;
+        private static string FirstPair;
+        private static string SecondPair;
 
-        static public List<QuickType.TradeHistory> CycleDownloadData(DateTime _StartDate, DateTime _EndDate, string _Pair)
+        static public List<TradeHistory> CycleDownloadData(DateTime _StartDate, DateTime _EndDate, string _Pair)
         {
             FirstPair = "USDT";
             SecondPair = _Pair;
@@ -18,11 +20,9 @@ namespace Emulator.Models
             int UnixEndDate = (int)(_EndDate - new DateTime(1970, 1, 1)).TotalSeconds;
 
             string site = "https://" + $"poloniex.com/public?command=returnTradeHistory&currencyPair={FirstPair}_{SecondPair}&start={UnixStartDate}&end={UnixEndDate}";
-
-
             
 
-            return QuickType.TradeHistory.FromJson(QuickType.JsonToString.GetString(site, FileName));
+            return TradeHistory.FromJson(JsonToString.GetString(site, FileName));
         }
     }
 }

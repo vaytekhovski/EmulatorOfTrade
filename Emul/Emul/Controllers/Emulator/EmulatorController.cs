@@ -25,8 +25,10 @@ namespace Emulator.Controllers
             Coin_DB = OwnDataBase.database.TradeHistory.OrderBy(history => history.Date).ToList();
             
             Models.Emulator.Emulator2 emulator = new Models.Emulator.Emulator2(Coin_DB);
+
             emulator.Settings(StartDate, EndDate, double.Parse(diff), double.Parse(checkTime), double.Parse(buyTime), double.Parse(holdTime), double.Parse(balance));
             emulator.MakeMoney();
+
             ViewBag.balance = emulator.BalanceUSD;
             ViewBag.TradeHistory = emulator.TradeHistory;
             return View();

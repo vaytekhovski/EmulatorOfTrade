@@ -18,39 +18,36 @@ namespace Emulator.Controllers.Data
         }
 
 
-        List<Coin_TH> th_list = new List<Coin_TH>();
+        private List<Coin_TH> th_list = new List<Coin_TH>();
     
         public ActionResult TradeHistoryDownload(DateTime StartDate, DateTime EndDate, string Pair)
         {
-
             DateTime start, end;
             start = EndDate;
             end = EndDate;
-            List<Coin_TH> listTH = new List<Coin_TH>();
-            
-            listTH = OwnDataBase.database.TradeHistory.OrderBy(history => history.Date).ToList();
+
+            List<Coin_TH> DB = OwnDataBase.database.TradeHistory.OrderBy(history => history.Date).ToList();
           
             int j = 0;
             do
             {
+                Debug.WriteLine($"{DateTime.Now} Download trade history {start.Date} : {end.Date} started");
+                
                 end = EndDate.AddDays(-j);
                 
                 start = start.AddDays(-10).Date < StartDate ? StartDate : end.AddDays(-10);
-                                
-                var lst = DownloadTradeHistory.CycleDownloadData(start, end, Pair);
-                Debug.WriteLine($"Download trade history {start.Date} : {end.Date} started");
 
-                ConvertToTH(lst, Pair);
+                ConvertToTH(DownloadTradeHistory.CycleDownloadData(start, end, Pair), Pair);
                         
-                for (int i = 0; i < listTH.Count; i++)
+                for (int i = 0; i < DB.Count; i++)
                     for (int z = 0; z < th_list.Count; z++)
-                        if (listTH[i].GlobalTradeId == th_list[z].GlobalTradeId)
+                        if (DB[i].GlobalTradeId == th_list[z].GlobalTradeId)
                             th_list.RemoveAt(z);
 
                 OwnDataBase.database.TradeHistory.AddRange(th_list);
-                Debug.WriteLine($"Download trade history {start.Date} : {end.Date} ended");
-                       
                 OwnDataBase.database.SaveChanges();
+
+                Debug.WriteLine($"{DateTime.Now} Download trade history {start.Date} : {end.Date} ended\n");
 
                 j += 10;
             } while (start != StartDate);

@@ -7,10 +7,7 @@ namespace Emulator.Models
 {
     public class TradeHistoryContext : DbContext
     {
-
         public DbSet<Coin_TH> TradeHistory { get; set; }
         public DbSet<Examination> Examinations { get; set; }
-
-        public DbSet<ChartData> ChartDatas { get; set; }
     }
 }

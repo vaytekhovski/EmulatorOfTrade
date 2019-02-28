@@ -4,8 +4,6 @@ using Newtonsoft.Json.Converters;
 
 namespace QuickType
 {
-
-
     internal static class Converter
     {
         public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings

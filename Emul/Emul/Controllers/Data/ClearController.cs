@@ -18,7 +18,6 @@ namespace Emul.Controllers.Data
         {
             var deleteList = OwnDataBase.database.TradeHistory.Where(o => o.CurrencyName == Pair);
             OwnDataBase.database.TradeHistory.RemoveRange(deleteList);
-
             OwnDataBase.database.SaveChanges();
 
             ViewBag.status = $"Clear trade history {Pair} ended";

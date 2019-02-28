@@ -9,40 +9,58 @@ namespace Emul.Models.EmulatorExam
 {
     public class EmulatorExam
     {
-        List<Coin_TH> DB = new List<Coin_TH>();
         public List<Examination> examinations = new List<Examination>();
-        
+
+        private List<Coin_TH> DB = new List<Coin_TH>();
+
+        private DateTime StartDate;
+        private DateTime EndDate;
+
+        private double diffFrom;
+        private double diffTo;
+        private double diffStep;
+
+        private double checkTimeFrom;
+        private double checkTimeTo;
+        private double checkTimeStep;
+
+        private double buyTimeFrom;
+        private double buyTimeTo;
+        private double buyTimeStep;
+
+        private double holdTimeFrom;
+        private double holdTimeTo;
+        private double holdTimeStep;
+
+        private double balance;
 
         public EmulatorExam(List<Coin_TH> _DB)
         {
             DB = _DB;
         }
 
-        DateTime StartDate, EndDate;
-        double diffFrom, diffTo, diffStep;
-        double checkTimeFrom, checkTimeTo, checkTimeStep;
-        double buyTimeFrom, buyTimeTo, buyTimeStep;
-        double holdTimeFrom, holdTimeTo, holdTimeStep;
-        double balance;
-
         public void Settings(DateTime _StartDate, DateTime _EndDate, double _DiffFrom, double _DiffTo, double _DiffStep, double _CheckTimeFrom, double _CheckTimeTo, double _CheckTimeStep, double _BuyTimeFrom, double _BuyTimeTo, double _BuyTimeStep, double _HoldTimeFrom, double _HoldTimeTo, double _HoldTimeStep, double _balance)
         {
             StartDate = _StartDate;
             EndDate = _EndDate;
+
             diffFrom = _DiffFrom;
             diffTo = _DiffTo;
             diffStep = _DiffStep;
+
             checkTimeFrom = _CheckTimeFrom;
             checkTimeTo = _CheckTimeTo;
             checkTimeStep = _CheckTimeStep;
+
             buyTimeFrom = _BuyTimeFrom;
             buyTimeTo = _BuyTimeTo;
             buyTimeStep = _BuyTimeStep;
+
             holdTimeFrom = _HoldTimeFrom;
             holdTimeTo = _HoldTimeTo;
             holdTimeStep = _HoldTimeStep;
-            balance = _balance;
 
+            balance = _balance;
         }
         
 
