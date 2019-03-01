@@ -22,18 +22,18 @@ namespace Emulator.Controllers.Data
 
         private List<Coin_TH> th_list = new List<Coin_TH>();
     
-        public ActionResult TradeHistoryDownload(DateTime _StartDate, DateTime _EndDate, string Pair)
+        public ActionResult TradeHistoryDownload(DateTime StartDate, DateTime EndDate, string Pair)
         {
-            startDate = _EndDate;
-            endDate = _EndDate;
+            startDate = EndDate;
+            endDate = EndDate;
 
             List<Coin_TH> DB = OwnDataBase.database.TradeHistory.OrderBy(history => history.Date).ToList();
           
             int tempDays = 0;
             do
             {
-                endDate = _EndDate.AddDays(-tempDays);
-                startDate = startDate.AddDays(-10).Date < _StartDate ? _StartDate : endDate.AddDays(-10);
+                endDate = EndDate.AddDays(-tempDays);
+                startDate = startDate.AddDays(-10).Date < StartDate ? StartDate : endDate.AddDays(-10);
 
 
                 Debug.WriteLine($"{DateTime.Now} Download trade history {startDate.Date} : {endDate.Date} started");
@@ -49,7 +49,7 @@ namespace Emulator.Controllers.Data
                 
 
                 tempDays += 10;
-            } while (startDate != _StartDate);
+            } while (startDate != StartDate);
             
             ViewBag.status = $"Download trade history {Pair} ended";
             th_list.Clear();
