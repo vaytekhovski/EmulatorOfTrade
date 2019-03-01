@@ -9,8 +9,7 @@ namespace Emulator.Models.Emulator
     public class Emulator2
     {
         public List<TH> TradeHistory = new List<TH>();
-
-        public double BalanceUSD { get; private set; }
+        
 
         private List<Coin_TH> DB = new List<Coin_TH>();
 
@@ -24,6 +23,7 @@ namespace Emulator.Models.Emulator
         private double BuyTime;
         private double HoldTime;
         private double balanceCoin;
+        private double balanceUSD;
 
         private double feeUSD;
         private double feeCoin;
@@ -56,7 +56,7 @@ namespace Emulator.Models.Emulator
             CheckTime = _CheckTime;
             BuyTime = _BuyTime;
             HoldTime = _HoldTime;
-            BalanceUSD = _balance;
+            balanceUSD = _balance;
 
             GenerateStartIndex();
             GenerateLastIndex();
@@ -106,7 +106,7 @@ namespace Emulator.Models.Emulator
             int lastIndex = 0;
             for (int i = index; i < DB.Count; i++)
             {
-                if (BalanceUSD == 0)
+                if (balanceUSD == 0)
                     break;
 
                 if (DB[i].Type == "Sell")
@@ -175,11 +175,12 @@ namespace Emulator.Models.Emulator
         {
             feeUSD = FEE * DB[i].Total;
             totalFee += feeUSD;
-            if (BalanceUSD - feeUSD > DB[i].Total)
+            balanceUSD -= feeUSD;
+            if (balanceUSD> DB[i].Total)
             {
-                BalanceUSD -= feeUSD;
+                
 
-                BalanceUSD -= DB[i].Total;
+                balanceUSD -= DB[i].Total;
                 balanceCoin += DB[i].Amount;
 
                 totalTotal += DB[i].Total;
@@ -187,10 +188,10 @@ namespace Emulator.Models.Emulator
             }
             else
             {
-                balanceCoin += ((BalanceUSD - feeUSD) / DB[i].Rate);
-                BalanceUSD = 0;
+                balanceCoin += (balanceUSD/ DB[i].Rate);
+                balanceUSD = 0;
 
-                totalAmount += ((BalanceUSD - feeUSD) / DB[i].Rate);
+                totalAmount += (balanceUSD / DB[i].Rate);
             }
             ABSRate = ABSRate == 0 ? DB[i].Rate : (DB[i].Rate + ABSRate) / 2;
         }
@@ -199,20 +200,19 @@ namespace Emulator.Models.Emulator
         {
             feeCoin = 0.002 * DB[i].Amount;
             totalFee += feeCoin;
+            balanceCoin -= feeCoin;
             if (balanceCoin > DB[i].Amount)
             {
-                balanceCoin -= feeCoin;
-
                 balanceCoin -= DB[i].Amount;
                 totalAmount += DB[i].Amount;
-                BalanceUSD += DB[i].Total;
+                balanceUSD += DB[i].Total;
                 totalTotal += DB[i].Total;
 
             }
             else
             {
-                BalanceUSD += ((balanceCoin - feeCoin) * DB[i].Rate);
-                totalTotal += ((balanceCoin - feeCoin) * DB[i].Rate);
+                balanceUSD += (balanceCoin * DB[i].Rate);
+                totalTotal += (balanceCoin * DB[i].Rate);
                 balanceCoin = 0;
             }
             ABSRate = ABSRate == 0 ? DB[i].Rate : (DB[i].Rate + ABSRate) / 2;
@@ -228,7 +228,7 @@ namespace Emulator.Models.Emulator
                 Amount = totalAmount,
                 Total = totalTotal,
                 Fee = totalFee,
-                Balance = BalanceUSD
+                Balance = balanceUSD
             });
         }
 
@@ -263,6 +263,9 @@ namespace Emulator.Models.Emulator
                 }
             }
         }
+
+        public double GetBalance() => balanceUSD;
+
 
     }
 }

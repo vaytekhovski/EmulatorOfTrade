@@ -93,11 +93,11 @@ namespace Emul.Models.EmulatorExam
                             emulator.Settings(StartDate, EndDate, indexDiff, indexCheck, indexBuy, indexHold, balance);
                             emulator.MakeMoney();
 
-                            examinations.Add(NewElement(indexDiff, indexCheck, indexBuy, indexHold, emulator.BalanceUSD));
+                            examinations.Add(NewElement(indexDiff, indexCheck, indexBuy, indexHold, emulator.GetBalance()));
                             
 
                             SW.Stop();
-                            Debug.WriteLine("[" + index + "/" + countCycles + "] " +  SW.Elapsed.Seconds + " " + emulator.BalanceUSD);
+                            Debug.WriteLine("[" + index + "/" + countCycles + "] " +  SW.Elapsed.Seconds + " " + emulator.GetBalance());
                             index++;
                         }
                     }
