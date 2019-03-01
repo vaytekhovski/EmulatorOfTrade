@@ -65,8 +65,6 @@ namespace Emulator.Models.Emulator
 
         public void MakeMoney()
         {
-            var SW = new Stopwatch();
-            SW.Start();
             //Debug.WriteLine(DateTime.Now + " " + balanceUSD);
 
             for (var index = startIndex; index < lastIndex; index++)
@@ -78,9 +76,6 @@ namespace Emulator.Models.Emulator
                 }
             }
 
-            SW.Stop();
-            Debug.WriteLine(SW.ElapsedMilliseconds);
-            DB.Clear();
         }
 
         private double CheckTimeRate(int index, double checkLength)

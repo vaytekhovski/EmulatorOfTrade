@@ -10,6 +10,7 @@ namespace Emul.Models.EmulatorExam
     public class EmulatorExam
     {
         private readonly List<Coin_TH> DB = new List<Coin_TH>();
+        private List<Examination> examinations = new List<Examination>();
 
         private DateTime StartDate;
         private DateTime EndDate;
@@ -31,6 +32,12 @@ namespace Emul.Models.EmulatorExam
         private double holdTimeStep;
 
         private double balance;
+
+        private int countDiff;
+        private int countCheck;
+        private int countBuy;
+        private int countHold;
+        private int countCycles;
 
         public EmulatorExam(List<Coin_TH> _DB)
         {
@@ -59,43 +66,58 @@ namespace Emul.Models.EmulatorExam
             holdTimeStep = _HoldTimeStep;
 
             balance = _balance;
+
+            countDiff = (int)((diffTo + 0.1 - diffFrom)/diffStep);
+            countCheck = (int)((checkTimeTo + 1 - checkTimeFrom) / checkTimeStep);
+            countBuy = (int)((buyTimeTo + 1 - buyTimeFrom ) / buyTimeStep);
+            countHold = (int)((holdTimeTo + 1 - holdTimeFrom) / holdTimeStep);
+            countCycles = countDiff * countCheck * countBuy * countHold;
         }
         
 
         public void StartExamination()
         {
-            for (double i = diffFrom; i < diffTo; i += diffStep)
+            int index = 1;
+            var emulator = new Emulator2(DB);
+            
+            for (double indexDiff = diffFrom; indexDiff < diffTo + 0.1; indexDiff += diffStep)
             {
-                for (double j = checkTimeFrom; j < checkTimeTo; j += checkTimeStep)
+                for (double indexCheck = checkTimeFrom; indexCheck < checkTimeTo + 1; indexCheck += checkTimeStep)
                 {
-                    for (double k = buyTimeFrom; k < buyTimeTo; k += buyTimeStep)
+                    for (double indexBuy = buyTimeFrom; indexBuy < buyTimeTo + 1; indexBuy += buyTimeStep)
                     {
-                        for (double l = holdTimeFrom; l < holdTimeTo; l += holdTimeStep)
+                        for (double indexHold = holdTimeFrom; indexHold < holdTimeTo + 1; indexHold += holdTimeStep)
                         {
-                            var emulator = new Emulator2(DB);
-
-                            emulator.Settings(StartDate, EndDate, i, j, k, l, balance);
+                            var SW = new Stopwatch();
+                            SW.Start();
+                            emulator.Settings(StartDate, EndDate, indexDiff, indexCheck, indexBuy, indexHold, balance);
                             emulator.MakeMoney();
+
+                            examinations.Add(NewElement(indexDiff, indexCheck, indexBuy, indexHold, emulator.BalanceUSD));
                             
-                            OwnDataBase.database.Examinations.Add(NewElement(i, j, k, l, emulator.BalanceUSD));
-                            OwnDataBase.database.SaveChanges();
+
+                            SW.Stop();
+                            Debug.WriteLine("[" + index + "/" + countCycles + "] " +  SW.Elapsed.Seconds + " " + emulator.BalanceUSD);
+                            index++;
                         }
                     }
                 }
             }
+            OwnDataBase.database.Examinations.AddRange(examinations);
+            OwnDataBase.database.SaveChanges();
             DB.Clear();
         }
 
-        private Examination NewElement(double i, double j, double k, double l, double balance)
+        private Examination NewElement(double indexDiff, double indexCheck, double indexBuy, double indexHold, double balance)
         {
             return new Examination
             {
                 StartDate = StartDate,
                 EndDate = EndDate,
-                Diff = i,
-                CheckTime = j,
-                BuyTime = k,
-                HoldTime = l,
+                Diff = indexDiff,
+                CheckTime = indexCheck,
+                BuyTime = indexBuy,
+                HoldTime = indexHold,
                 Balance = balance
             };
         }
