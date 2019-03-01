@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web.Mvc;
-using QuickType;
-using Emulator.Models;
-using System.Data.Entity;
+﻿using System.Web.Mvc;
 
 namespace Emulator.Controllers
 {

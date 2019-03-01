@@ -30,14 +30,14 @@ namespace Emul.Controllers.EmulatorExam
             emulatorexam.Settings(StartDate, EndDate, double.Parse(diffFrom), double.Parse(diffTo), double.Parse(diffStep), double.Parse(checkTimeFrom), double.Parse(checkTimeTo), double.Parse(checkTimeStep), double.Parse(buyTimeFrom), double.Parse(buyTimeTo), double.Parse(buyTimeStep), double.Parse(holdTimeFrom), double.Parse(holdTimeTo), double.Parse(holdTimeStep), double.Parse(balance));
             emulatorexam.StartExamination();
 
-            ViewBag.examinations = emulatorexam.examinations;
+            ViewBag.examinations = OwnDataBase.database.Examinations.OrderByDescending(value => value.Balance);
             return View();
           
         }
 
         public ActionResult ShowResults()
         {
-            ViewBag.examinations = OwnDataBase.database.Examinations;
+            ViewBag.examinations = OwnDataBase.database.Examinations.OrderByDescending(value => value.Balance);
             return View();
         }
     }

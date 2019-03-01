@@ -31,6 +31,7 @@ namespace Emulator.Controllers
 
             ViewBag.balance = emulator.BalanceUSD;
             ViewBag.TradeHistory = emulator.TradeHistory;
+            
             return View();
         }
     }

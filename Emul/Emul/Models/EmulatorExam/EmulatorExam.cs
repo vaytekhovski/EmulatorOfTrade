@@ -9,9 +9,7 @@ namespace Emul.Models.EmulatorExam
 {
     public class EmulatorExam
     {
-        public List<Examination> examinations = new List<Examination>();
-
-        private List<Coin_TH> DB = new List<Coin_TH>();
+        private readonly List<Coin_TH> DB = new List<Coin_TH>();
 
         private DateTime StartDate;
         private DateTime EndDate;
@@ -66,9 +64,7 @@ namespace Emul.Models.EmulatorExam
 
         public void StartExamination()
         {
-            Emulator2 emulator = new Emulator2(DB);
-
-            for (double i = diffFrom; i < diffTo; i+=diffStep)
+            for (double i = diffFrom; i < diffTo; i += diffStep)
             {
                 for (double j = checkTimeFrom; j < checkTimeTo; j += checkTimeStep)
                 {
@@ -76,24 +72,32 @@ namespace Emul.Models.EmulatorExam
                     {
                         for (double l = holdTimeFrom; l < holdTimeTo; l += holdTimeStep)
                         {
-                            //Debug.WriteLine($"Starting emulation with diff: {i}, checkTime: {j}, buyTime: {k}, holdTime: {l}");
+                            var emulator = new Emulator2(DB);
+
                             emulator.Settings(StartDate, EndDate, i, j, k, l, balance);
                             emulator.MakeMoney();
-                            examinations.Add(new Examination {
-                                StartDate = StartDate,
-                                EndDate = EndDate,
-                                Diff = i,
-                                CheckTime = j,
-                                BuyTime = k,
-                                HoldTime = l,
-                                Balance = emulator.BalanceUSD
-                            });
-                            OwnDataBase.database.Examinations.Add(examinations[examinations.Count - 1]);
+                            
+                            OwnDataBase.database.Examinations.Add(NewElement(i, j, k, l, emulator.BalanceUSD));
                             OwnDataBase.database.SaveChanges();
                         }
                     }
                 }
             }
+            DB.Clear();
+        }
+
+        private Examination NewElement(double i, double j, double k, double l, double balance)
+        {
+            return new Examination
+            {
+                StartDate = StartDate,
+                EndDate = EndDate,
+                Diff = i,
+                CheckTime = j,
+                BuyTime = k,
+                HoldTime = l,
+                Balance = balance
+            };
         }
     }
 }

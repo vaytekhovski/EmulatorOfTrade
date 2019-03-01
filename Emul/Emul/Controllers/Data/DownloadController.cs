@@ -17,47 +17,60 @@ namespace Emulator.Controllers.Data
             return View();
         }
 
+        private DateTime startDate;
+        private DateTime endDate;
 
         private List<Coin_TH> th_list = new List<Coin_TH>();
     
-        public ActionResult TradeHistoryDownload(DateTime StartDate, DateTime EndDate, string Pair)
+        public ActionResult TradeHistoryDownload(DateTime _StartDate, DateTime _EndDate, string Pair)
         {
-            DateTime start, end;
-            start = EndDate;
-            end = EndDate;
+            startDate = _EndDate;
+            endDate = _EndDate;
 
             List<Coin_TH> DB = OwnDataBase.database.TradeHistory.OrderBy(history => history.Date).ToList();
           
-            int j = 0;
+            int tempDays = 0;
             do
             {
-                end = EndDate.AddDays(-j);
-                
-                start = start.AddDays(-10).Date < StartDate ? StartDate : end.AddDays(-10);
+                endDate = _EndDate.AddDays(-tempDays);
+                startDate = startDate.AddDays(-10).Date < _StartDate ? _StartDate : endDate.AddDays(-10);
 
-                Debug.WriteLine($"{DateTime.Now} Download trade history {start.Date} : {end.Date} started");
 
-                ConvertToTH(DownloadTradeHistory.CycleDownloadData(start, end, Pair), Pair);
-                        
-                for (int i = 0; i < DB.Count; i++)
-                    if(DB[i].Type == Pair)
-                        for (int z = 0; z < th_list.Count; z++)
-                            if (DB[i].GlobalTradeId == th_list[z].GlobalTradeId)
-                                th_list.RemoveAt(z);
+                Debug.WriteLine($"{DateTime.Now} Download trade history {startDate.Date} : {endDate.Date} started");
+
+                ConvertToTH(DownloadTradeHistory.CycleDownloadData(startDate, endDate, Pair), Pair);
+
+                CheckExist(Pair, DB);
 
                 OwnDataBase.database.TradeHistory.AddRange(th_list);
                 OwnDataBase.database.SaveChanges();
 
-                Debug.WriteLine($"{DateTime.Now} Download trade history {start.Date} : {end.Date} ended\n");
+                Debug.WriteLine($"{DateTime.Now} Download trade history {startDate.Date} : {endDate.Date} ended\n");
+                
 
-                j += 10;
-            } while (start != StartDate);
+                tempDays += 10;
+            } while (startDate != _StartDate);
             
             ViewBag.status = $"Download trade history {Pair} ended";
             th_list.Clear();
+
             return View();
         }
 
+        private void CheckExist(string Pair, List<Coin_TH> DB)
+        {
+            for (int dbIndex = 0; dbIndex < DB.Count; dbIndex++)
+            {
+                if (DB[dbIndex].Type == Pair)
+                {
+                    for (int listIndex = 0; listIndex < th_list.Count; listIndex++)
+                    {
+                        if (DB[dbIndex].GlobalTradeId == th_list[listIndex].GlobalTradeId)
+                            th_list.RemoveAt(listIndex);
+                    }
+                }
+            }
+        }
 
         void ConvertToTH(List<TradeHistory> histories, string type)
         {

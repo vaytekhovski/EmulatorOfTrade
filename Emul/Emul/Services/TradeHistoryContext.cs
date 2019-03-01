@@ -1,7 +1,6 @@
 ﻿using System.Data.Entity;
 using Emul.Models.EmulatorExam;
 using Emulator.Models.DataBase.DBModels;
-using QuickType;
 
 namespace Emulator.Models
 {

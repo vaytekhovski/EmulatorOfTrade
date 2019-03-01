@@ -6,23 +6,23 @@ namespace Emulator.Models
 {
     public static class DownloadTradeHistory
     {
-        private static string FirstPair;
+        private const string FirstPair = "USDT";
+        private const string FileName = "returnTradeHistory";
         private static string SecondPair;
+        private static int UnixStartDate;
+        private static int UnixEndDate;
+        private static string SitePath;
 
-        static public List<TradeHistory> CycleDownloadData(DateTime _StartDate, DateTime _EndDate, string _Pair)
+        public static List<TradeHistory> CycleDownloadData(DateTime _StartDate, DateTime _EndDate, string _Pair)
         {
-            FirstPair = "USDT";
             SecondPair = _Pair;
-            
-            string FileName = "returnTradeHistory";
 
-            int UnixStartDate = (int)(_StartDate - new DateTime(1970, 1, 1)).TotalSeconds;
-            int UnixEndDate = (int)(_EndDate - new DateTime(1970, 1, 1)).TotalSeconds;
+            UnixStartDate = (int)(_StartDate - new DateTime(1970, 1, 1)).TotalSeconds;
+            UnixEndDate = (int)(_EndDate - new DateTime(1970, 1, 1)).TotalSeconds;
 
-            string site = "https://" + $"poloniex.com/public?command=returnTradeHistory&currencyPair={FirstPair}_{SecondPair}&start={UnixStartDate}&end={UnixEndDate}";
-            
+            SitePath = "https://" + $"poloniex.com/public?command=returnTradeHistory&currencyPair={FirstPair}_{SecondPair}&start={UnixStartDate}&end={UnixEndDate}";
 
-            return TradeHistory.FromJson(JsonToString.GetString(site, FileName));
+            return TradeHistory.FromJson(JsonToString.GetString(SitePath, FileName));
         }
     }
 }
