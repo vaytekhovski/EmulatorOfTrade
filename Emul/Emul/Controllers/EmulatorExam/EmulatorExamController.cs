@@ -25,7 +25,7 @@ namespace Emul.Controllers.EmulatorExam
         {
             Debug.WriteLine("parse DB to LIST started");
             var Coin_DB = new List<Coin_TH>();
-            Coin_DB = OwnDataBase.database.TradeHistory.OrderBy(history => history.Date).ToList();
+            Coin_DB = OwnDataBase.database.TradeHistory.OrderBy(history => history.Date).Where(hisroty => hisroty.CurrencyName == Pair).ToList();
 
             Debug.WriteLine("parse DB to LIST ended");
 

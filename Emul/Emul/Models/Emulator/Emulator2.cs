@@ -65,8 +65,6 @@ namespace Emulator.Models.Emulator
 
         public void MakeMoney()
         {
-            //Debug.WriteLine(DateTime.Now + " " + balanceUSD);
-
             for (var index = startIndex; index < lastIndex; index++)
             {
                 if(IsDiff(index) && DB[index].Type == "Sell")
@@ -76,24 +74,46 @@ namespace Emulator.Models.Emulator
                 }
             }
 
+
+        }
+
+        private bool IsDiff(int index)
+        {
+            bool diff = false;
+
+            double currentRate = CurrentRate(index);
+            double checkTimeRate = 0;
+
+            for (var checkLength = 0.5; checkLength < CheckTime; checkLength += 0.5)
+            {
+                checkTimeRate = CheckTimeRate(index, checkLength);
+
+                if (checkTimeRate < currentRate - (currentRate * PersentDiff) && currentRate != 0 && checkTimeRate != 0)
+                {
+                    diff = true;
+                    break;
+                }
+            }
+            
+
+            return diff;
         }
 
         private double CheckTimeRate(int index, double checkLength)
         {
             double rate = 0;
 
-            int min = (int)checkLength;
-            int sec = ((checkLength - min) * 10) == 5 ? 30 : 0;
+            DateTimeOffset checkDate = DB[index].Date.AddMinutes(-checkLength);
 
             for (int i = index; i > 0; i--)
             {
-                if (DB[i].Rate != 0 && DB[i].Date < DB[index].Date.AddMinutes(-min).AddSeconds(-sec))
+                if (DB[i].Rate != 0 && DB[i].Date < checkDate)
                 {
                     rate = DB[i].Rate;
                     break;
                 }
             }
-
+            
             return rate;
         }
 
@@ -104,24 +124,22 @@ namespace Emulator.Models.Emulator
             BreakValues();
 
             int lastIndex = 0;
-            for (int i = index; i < DB.Count; i++)
+            int i = 0;
+            for (i = index; i < DB.Count; i++)
             {
                 if (balanceUSD == 0)
                     break;
 
-                if (DB[i].Type == "Sell")
+                if (DB[i].Type == "Sell" && DB[index].Date.AddMinutes(BuyTime) > DB[i].Date)
                 {
-                    if (DB[index].Date.AddMinutes((int)BuyTime) > DB[i].Date)
-                    {
-                        MakePurchaseBUY(i);
-                    }
-                    else
-                        break;
+                    MakePurchaseBUY(i);
                 }
+                else
+                    break;
 
-                lastIndex = i;
             }
 
+            lastIndex = i;
             AddTH(index, "Buy");
             return lastIndex;
         }
@@ -131,55 +149,32 @@ namespace Emulator.Models.Emulator
             BreakValues();
 
             int lastIndex = 0;
-            for (int i = index; i < DB.Count; i++)
+            int i = 0;
+            for (i = index; i < DB.Count; i++)
             {
-                if (DB[index].Date.AddMinutes((int)HoldTime) < DB[i].Date)
-                {
-                    if (balanceCoin == 0)
-                        break;
+                if (balanceCoin == 0)
+                    break;
 
-                    if (DB[i].Type == "Buy")
-                    {
-                        MakePurchaseSELL(i);
-                    }
+                if (DB[i].Type == "Buy" && DB[index].Date.AddMinutes(HoldTime) < DB[i].Date)
+                {
+                    MakePurchaseSELL(i);
                 }
 
-                lastIndex = i;
             }
 
-
+            lastIndex = i;
             AddTH(index, "Sell");
-            //Debug.WriteLine(DB[index].Date + " SELL " + balanceUSD);
             return lastIndex;
         }
-
-        private bool IsDiff(int index)
-        {
-            bool diff = false;
-
-            for (var checkLength = 0.5; checkLength < CheckTime; checkLength += 0.5)
-            {
-                if (CheckTimeRate(index, checkLength) < CurrentRate(index) - (CurrentRate(index) * PersentDiff)
-                    && CurrentRate(index) != 0 && CheckTimeRate(index, checkLength) != 0)
-                {
-                    diff = true;
-                    //Debug.WriteLine(ctr);
-                    break;
-                }
-            }
-
-            return diff;
-        }
+        
 
         private void MakePurchaseBUY(int i)
         {
             feeUSD = FEE * DB[i].Total;
             totalFee += feeUSD;
             balanceUSD -= feeUSD;
-            if (balanceUSD> DB[i].Total)
+            if (balanceUSD > DB[i].Total)
             {
-                
-
                 balanceUSD -= DB[i].Total;
                 balanceCoin += DB[i].Amount;
 

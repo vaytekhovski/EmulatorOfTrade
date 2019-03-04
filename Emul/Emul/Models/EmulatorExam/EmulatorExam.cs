@@ -5,6 +5,8 @@ using System;
 using System.Diagnostics;
 using Emulator.Models;
 
+
+
 namespace Emul.Models.EmulatorExam
 {
     public class EmulatorExam
@@ -97,7 +99,7 @@ namespace Emul.Models.EmulatorExam
                             
 
                             SW.Stop();
-                            Debug.WriteLine("[" + index + "/" + countCycles + "] " +  SW.Elapsed.Seconds + " " + emulator.GetBalance());
+                            Debug.WriteLine("[" + index + "/" + countCycles + "] " +  SW.ElapsedMilliseconds + " " + emulator.GetBalance());
                             index++;
                         }
                     }
