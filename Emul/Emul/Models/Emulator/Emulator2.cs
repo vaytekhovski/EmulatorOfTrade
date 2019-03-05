@@ -38,6 +38,8 @@ namespace Emulator.Models.Emulator
         private double ABSRate;
 
 
+        private DateTimeOffset previusDate;
+
         public Emulator2() { }
 
         public Emulator2(List<Coin_TH> _DB)
@@ -58,6 +60,8 @@ namespace Emulator.Models.Emulator
             HoldTime = _HoldTime;
             balanceUSD = _balance;
 
+            previusDate = _StartTime;
+
             GenerateStartIndex();
             GenerateLastIndex();
         }
@@ -65,16 +69,21 @@ namespace Emulator.Models.Emulator
 
         public void MakeMoney()
         {
+            var sw = new Stopwatch();
+            sw.Start();
+
             for (var index = startIndex; index < lastIndex; index++)
             {
-                if(IsDiff(index) && DB[index].Type == "Sell")
-                {
-                    index = Buy(index);
-                    index = Sell(index);
-                }
+                if(previusDate.AddMinutes(1) <= DB[index].Date)
+                    if(IsDiff(index) && DB[index].Type == "Sell")
+                    {
+                        index = Buy(index);
+                        index = Sell(index);
+                    
+                    }
             }
-
-
+            sw.Stop();
+            Debug.WriteLine(sw.ElapsedMilliseconds);
         }
 
         private bool IsDiff(int index)
@@ -94,7 +103,8 @@ namespace Emulator.Models.Emulator
                     break;
                 }
             }
-            
+
+            previusDate = DB[index].Date;
 
             return diff;
         }
@@ -103,16 +113,23 @@ namespace Emulator.Models.Emulator
         {
             double rate = 0;
 
+            // Дата элемента, rate которого мы хотим получить
             DateTimeOffset checkDate = DB[index].Date.AddMinutes(-checkLength);
-
+            
+            // Двигаемся от текущего элемента
             for (int i = index; i > 0; i--)
             {
-                if (DB[i].Rate != 0 && DB[i].Date < checkDate)
+                // Проверяем, дата i-го элемента меньше либо равна даты интересующего нас элемента
+                if (DB[i].Rate != 0 && DB[i].Date <= checkDate)
                 {
+                    // Если да, то записываем rate и выходим
                     rate = DB[i].Rate;
                     break;
                 }
             }
+
+            // Алгорит работает медленно, в связи в необходимостью проверки всех элементов
+            // в диапазоне от DB[index].Date до DB[index].Date - checkLength
             
             return rate;
         }

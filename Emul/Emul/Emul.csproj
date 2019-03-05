@@ -115,6 +115,7 @@
     </Compile>
     <Compile Include="Models\DataBase\DBModels\Coin_TH.cs" />
     <Compile Include="Models\DataBase\DBModels\TH.cs" />
+    <Compile Include="Models\EmulatorExam\EmulatorExamAsync.cs" />
     <Compile Include="Services\DownloadTradeHistory.cs" />
     <Compile Include="Services\TradeHistoryContext.cs" />
     <Compile Include="Models\EmulatorExam\EmulatorExam.cs" />
@@ -152,7 +153,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\EmulatorExamAsync\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

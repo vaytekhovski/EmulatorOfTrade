@@ -21,7 +21,7 @@ namespace Emul.Controllers.EmulatorExam
             return View();
         }
 
-        public ActionResult Examination(string Pair, DateTime StartDate, DateTime EndDate, string diffFrom, string diffTo, string diffStep, string checkTimeFrom, string checkTimeTo, string checkTimeStep, string buyTimeFrom, string buyTimeTo, string buyTimeStep, string holdTimeFrom, string holdTimeTo, string holdTimeStep, string balance)
+        public async System.Threading.Tasks.Task<ActionResult> Examination(string Pair, DateTime StartDate, DateTime EndDate, string diffFrom, string diffTo, string diffStep, string checkTimeFrom, string checkTimeTo, string checkTimeStep, string buyTimeFrom, string buyTimeTo, string buyTimeStep, string holdTimeFrom, string holdTimeTo, string holdTimeStep, string balance)
         {
             Debug.WriteLine("parse DB to LIST started");
             var Coin_DB = new List<Coin_TH>();
