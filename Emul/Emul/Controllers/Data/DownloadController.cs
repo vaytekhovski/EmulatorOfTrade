@@ -20,10 +20,13 @@ namespace Emulator.Controllers.Data
         private DateTime startDate;
         private DateTime endDate;
 
+        private double MinValue;
+
         private List<Coin_TH> th_list = new List<Coin_TH>();
     
-        public ActionResult TradeHistoryDownload(DateTime StartDate, DateTime EndDate, string Pair)
+        public ActionResult TradeHistoryDownload(DateTime StartDate, DateTime EndDate, string Pair, string MinValue)
         {
+            this.MinValue = double.Parse(MinValue);
             startDate = EndDate;
             endDate = EndDate;
 
@@ -40,6 +43,7 @@ namespace Emulator.Controllers.Data
 
                 ConvertToTH(DownloadTradeHistory.CycleDownloadData(startDate, endDate, Pair), Pair);
 
+                CheckMinValue();
                 CheckExist(Pair, DB);
                 
                 OwnDataBase.database.TradeHistory.AddRange(th_list);
@@ -57,6 +61,19 @@ namespace Emulator.Controllers.Data
             return View();
         }
 
+        private void CheckMinValue()
+        {
+            for (int i = 0; i < th_list.Count; i++)
+            {
+                if (th_list[i].Total < MinValue)
+                {
+                    th_list.RemoveAt(i);
+                    i--;
+                }
+            }
+            
+        }
+
         private void CheckExist(string Pair, List<Coin_TH> DB)
         {
             for (int dbIndex = 0; dbIndex < DB.Count; dbIndex++)
@@ -66,7 +83,10 @@ namespace Emulator.Controllers.Data
                     for (int listIndex = 0; listIndex < th_list.Count; listIndex++)
                     {
                         if (DB[dbIndex].GlobalTradeId == th_list[listIndex].GlobalTradeId)
+                        {
                             th_list.RemoveAt(listIndex);
+                            listIndex--;
+                        }
                     }
                 }
             }
