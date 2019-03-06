@@ -45,9 +45,10 @@ namespace Emulator.Controllers.Data
 
                 CheckMinValue();
                 CheckExist(Pair, DB);
-                
-                OwnDataBase.database.TradeHistory.AddRange(th_list);
-                OwnDataBase.database.SaveChanges();
+
+                //OwnDataBase.database.TradeHistory.AddRange(th_list);
+                OwnDataBase.database.BulkInsert(th_list);
+                OwnDataBase.database.BulkSaveChangesAsync();
 
                 Debug.WriteLine($"{DateTime.Now} Download trade history {startDate.Date} : {endDate.Date} ended\n");
                 

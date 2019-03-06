@@ -115,9 +115,11 @@ namespace Emul.Models.EmulatorExam
                             if (SaveData)
                             {
                                 Debug.WriteLine("save th");
-                                OwnDataBase.database.TradeHistories.AddRange(emulator.TradeHistory);
+
+                                //OwnDataBase.database.TradeHistories.AddRange(emulator.TradeHistory);
+                                OwnDataBase.database.BulkInsert(emulator.TradeHistory);
                             }
-                            OwnDataBase.database.SaveChanges();
+                            OwnDataBase.database.BulkSaveChangesAsync();
 
                             index++;
                             Debug.WriteLine(SW.ElapsedMilliseconds);

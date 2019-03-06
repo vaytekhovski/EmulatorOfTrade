@@ -52,7 +52,7 @@ namespace Emul.Controllers.EmulatorExam
             OwnDataBase.database.Examinations.DeleteFromQueryAsync();
             OwnDataBase.database.TradeHistories.DeleteFromQueryAsync();
 
-            OwnDataBase.database.SaveChanges();
+            OwnDataBase.database.BulkSaveChangesAsync();
 
 
             ViewBag.status = $"Deleting examination history canceled";

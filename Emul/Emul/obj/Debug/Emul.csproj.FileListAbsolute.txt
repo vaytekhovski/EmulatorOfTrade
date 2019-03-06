@@ -247,3 +247,7 @@ D:\REPOSITORY\EmulatorOfTrade\Emul\Emul\bin\Z.BulkOperations.dll
 D:\REPOSITORY\EmulatorOfTrade\Emul\Emul\bin\Z.EntityFramework.Extensions.dll
 D:\REPOSITORY\EmulatorOfTrade\Emul\Emul\bin\Z.BulkOperations.xml
 D:\REPOSITORY\EmulatorOfTrade\Emul\Emul\bin\Z.EntityFramework.Extensions.xml
+D:\GITHUB REPOS\Emul\Emul\bin\Z.BulkOperations.dll
+D:\GITHUB REPOS\Emul\Emul\bin\Z.EntityFramework.Extensions.dll
+D:\GITHUB REPOS\Emul\Emul\bin\Z.BulkOperations.xml
+D:\GITHUB REPOS\Emul\Emul\bin\Z.EntityFramework.Extensions.xml
