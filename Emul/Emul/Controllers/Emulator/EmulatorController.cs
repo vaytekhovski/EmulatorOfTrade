@@ -21,7 +21,7 @@ namespace Emulator.Controllers
             return View();
         }
 
-        public ActionResult Emulation(string Pair, DateTime StartDate, DateTime EndDate, string diff, string checkTime, string buyTime, string holdTime, string balance)
+        public ActionResult Emulation(string Pair, DateTime StartDate, DateTime EndDate, string checkDiff, string diff, string checkTime, string buyTime, string holdTime, string balance)
         {
             Debug.WriteLine("parse DB to LIST started");
             List<Coin_TH> Coin_DB = new List<Coin_TH>();
@@ -29,11 +29,11 @@ namespace Emulator.Controllers
             Debug.WriteLine("parse DB to LIST ended");
 
 
-            Models.Emulator.EmulatorAsync emulator = new Models.Emulator.EmulatorAsync(Coin_DB);
+            Models.Emulator.Emulator2 emulator = new Models.Emulator.Emulator2(Coin_DB);
 
             Debug.WriteLine("set settings");
 
-            Models.Emulator.EmulatorAsync.Settings(StartDate, EndDate, true, -1, double.Parse(diff), double.Parse(checkTime), double.Parse(buyTime), double.Parse(holdTime), double.Parse(balance));
+            emulator.Settings(StartDate, EndDate,double.Parse(checkDiff), true, -1, double.Parse(diff), double.Parse(checkTime), double.Parse(buyTime), double.Parse(holdTime), double.Parse(balance));
             Debug.WriteLine("start emulation");
 
             var sw = new Stopwatch();

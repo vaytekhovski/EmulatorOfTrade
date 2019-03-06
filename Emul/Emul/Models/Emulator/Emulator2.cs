@@ -39,6 +39,7 @@ namespace Emulator.Models.Emulator
         private double ABSRate;
 
         private bool SaveData;
+        private double checkDiff;
 
 
         private DateTimeOffset previusDate;
@@ -51,10 +52,12 @@ namespace Emulator.Models.Emulator
             DB = _DB ?? throw new ArgumentNullException(nameof(_DB));
         }
 
-        public void Settings(DateTime _StartTime, DateTime _EndTime, bool _SaveData, int _Id, double _Diff, double _CheckTime, double _BuyTime, double _HoldTime, double _balance)
+        public void Settings(DateTime _StartTime, DateTime _EndTime, double _checkDiff, bool _SaveData, int _Id, double _Diff, double _CheckTime, double _BuyTime, double _HoldTime, double _balance)
         {
             StartTime = _StartTime;
             EndTime = _EndTime;
+
+            checkDiff = _checkDiff;
 
             SaveData = _SaveData;
 
@@ -79,7 +82,7 @@ namespace Emulator.Models.Emulator
         {
             for (var index = startIndex; index < lastIndex; index++)
             {
-                if(previusDate.AddMinutes(1) <= DB[index].Date)
+                if(previusDate.AddSeconds(checkDiff) <= DB[index].Date)
                     if(IsDiff(index) && DB[index].Type == "Sell")
                     {
                         index = Buy(index);

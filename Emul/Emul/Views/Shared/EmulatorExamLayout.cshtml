@@ -20,26 +20,35 @@
         <br><br>
 
         Difference: <br>
-        From  <input type="text" name="diffFrom" value="0,5" />% To <input type="text" name="diffTo" value="2" />%<br><br>
+        From  <input type="text" name="diffFrom" value="0,5" />% 
+        To <input type="text" name="diffTo" value="2" />%<br><br>
         Difference step:<input type="text" name="diffStep" value="0,1" />%
         <br><br><br>
+        Difference Check: <br>
+        From  <input type="text" name="diffCheckFrom" value="10" />сек.
+        To <input type="text" name="diffCheckTo" value="120" />%<br><br>сек.
+        Difference Check step:<input type="text" name="diffCheckStep" value="10" />сек.
+        <br><br><br>
         Check time: <br>
-        From  <input type="text" name="checkTimeFrom" value="1" /> To <input type="text" name="checkTimeTo" value="10" /> minutes<br><br>
+        From  <input type="text" name="checkTimeFrom" value="1" /> 
+        To <input type="text" name="checkTimeTo" value="10" /> minutes<br><br>
         Check time step:<input type="text" name="checkTimeStep" value="1" /> minutes
         <br><br><br>
         Buy time: <br>
-        From  <input type="text" name="buyTimeFrom" value="1" /> To <input type="text" name="buyTimeTo" value="10" /> minutes<br><br>
+        From  <input type="text" name="buyTimeFrom" value="1" /> 
+        To <input type="text" name="buyTimeTo" value="10" /> minutes<br><br>
         Buy time step:<input type="text" name="buyTimeStep" value="1" /> minutes
         <br><br><br>
         Hold time:
-        From  <input type="text" name="holdTimeFrom" value="1" /> To <input type="text" name="holdTimeTo" value="30" /> minutes<br><br>
+        From  <input type="text" name="holdTimeFrom" value="1" /> 
+        To <input type="text" name="holdTimeTo" value="30" /> minutes<br><br>
         Hold time step:<input type="text" name="holdTimeStep" value="1" /> minutes
         <br><br><br>
         <label for="balance">Balance: </label>
         <input type="text" name="balance" value="1000000" />$.
         <br><br>
         <label for="SaveData">Save Trade History for each emulation?: </label>
-        <input type="checkbox" name="SaveData" value="true" checked="checked"/>
+        <input type="checkbox" name="SaveData" value="true" checked="checked" />
         <input name="SaveData" type="hidden" value="false" />
         <br><br>
         <input type="submit" name="Examination" value="Запуск" formaction="../EmulatorExam/Examination" formmethod="post" />

@@ -125,7 +125,6 @@
     <Compile Include="Models\Emulator\EmulatorAsync.cs" />
     <Compile Include="Services\DownloadTradeHistory.cs" />
     <Compile Include="Services\TradeHistoryContext.cs" />
-    <Compile Include="Models\EmulatorExam\EmulatorExamThread.cs" />
     <Compile Include="Models\EmulatorExam\Examination.cs" />
     <Compile Include="Models\Emulator\Emulator2.cs" />
     <Compile Include="Services\OwnDataBase.cs" />
