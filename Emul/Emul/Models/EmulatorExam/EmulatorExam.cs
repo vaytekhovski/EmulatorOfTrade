@@ -121,6 +121,7 @@ namespace Emul.Models.EmulatorExam
                                 StartEmulation(emulator, indexDiff, indexCheckDiff, indexCheck, indexBuy, indexHold);
 
 
+<<<<<<< HEAD
                                 SW.Stop();
                                 OwnDataBase.database.Examinations.Add(NewElement(indexDiff, indexCheckDiff, indexCheck, indexBuy, indexHold, emulator.GetBalance()));
                                 if (SaveData)
@@ -129,6 +130,18 @@ namespace Emul.Models.EmulatorExam
                                     OwnDataBase.database.TradeHistories.AddRange(emulator.TradeHistory);
                                 }
                                 OwnDataBase.database.SaveChanges();
+=======
+                            SW.Stop();
+                            OwnDataBase.database.Examinations.Add(NewElement(indexDiff, indexCheck, indexBuy, indexHold, emulator.GetBalance()));
+                            if (SaveData)
+                            {
+                                Debug.WriteLine("save th");
+
+                                //OwnDataBase.database.TradeHistories.AddRange(emulator.TradeHistory);
+                                OwnDataBase.database.BulkInsert(emulator.TradeHistory);
+                            }
+                            OwnDataBase.database.BulkSaveChangesAsync();
+>>>>>>> rizhiy
 
                                 index++;
                                 Debug.WriteLine(SW.ElapsedMilliseconds);
