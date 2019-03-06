@@ -1,0 +1,38 @@
+﻿
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Emulation</title>
+    <link rel="stylesheet" type="text/css" href="~/App_Data/Styles/style.css">.
+</head>
+<body>
+    <div>
+        <p>@ViewBag.EmulationNumber</p>
+        <table>
+            <tr>
+                <td><p>Date: </p></td>
+                <td><p>Type: </p></td>
+                <td><p>Rate: </p></td>
+                <td><p>Amount: </p></td>
+                <td><p>Total: </p></td>
+                <td><p>Fee: </p></td>
+                <td><p>Balance: </p></td>
+            </tr>
+            @foreach (var value in ViewBag.TradeHistories)
+            {
+                <tr>
+                    <td><p>@value.Date </p></td>
+                    <td><p>@value.Type </p></td>
+                    <td><p>@value.Rate </p></td>
+                    <td><p>@value.Amount </p></td>
+                    <td><p>@value.Total </p></td>
+                    <td><p>@value.Fee </p></td>
+                    <td><p>@value.Balance </p></td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+</html>

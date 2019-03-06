@@ -13,8 +13,7 @@ namespace Emul.Controllers.Data
 
         public ActionResult ClearTradeHistory(string Pair)
         {
-            OwnDataBase.database.TradeHistory.RemoveRange(OwnDataBase.database.TradeHistory.Where(o => o.CurrencyName == Pair));
-            
+            OwnDataBase.database.TradeHistory.Where(o => o.CurrencyName == Pair).DeleteFromQueryAsync();
             OwnDataBase.database.SaveChanges();
 
             ViewBag.status = $"Clear trade history {Pair} ended";

@@ -7,6 +7,8 @@ namespace Emul.Models.DataBase.DBModels
 {
     public class TH
     {
+        public int Id { get; set; }
+        public int EmulationNumber { get; set; }
         public DateTimeOffset Date { get; set; }
         public string Type { get; set; }
         public double Rate { get; set; }

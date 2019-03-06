@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Web.Mvc;
 
 namespace Emulator.Controllers
@@ -28,18 +29,29 @@ namespace Emulator.Controllers
             Debug.WriteLine("parse DB to LIST ended");
 
 
-            Models.Emulator.Emulator2 emulator = new Models.Emulator.Emulator2(Coin_DB);
+            Models.Emulator.EmulatorAsync emulator = new Models.Emulator.EmulatorAsync(Coin_DB);
 
             Debug.WriteLine("set settings");
 
-            emulator.Settings(StartDate, EndDate, double.Parse(diff), double.Parse(checkTime), double.Parse(buyTime), double.Parse(holdTime), double.Parse(balance));
+            Models.Emulator.EmulatorAsync.Settings(StartDate, EndDate, true, -1, double.Parse(diff), double.Parse(checkTime), double.Parse(buyTime), double.Parse(holdTime), double.Parse(balance));
             Debug.WriteLine("start emulation");
-            
+
+            var sw = new Stopwatch();
+            sw.Start();
             emulator.MakeMoney();
+            sw.Stop();
+            Debug.WriteLine(sw.ElapsedMilliseconds);
             
             ViewBag.balance = emulator.GetBalance();
-            ViewBag.TradeHistory = emulator.TradeHistory;
+            ViewBag.TradeHistory = Models.Emulator.EmulatorAsync.TradeHistory;
             
+            return View();
+        }
+
+        public ActionResult ShowEmulation(int Id)
+        {
+            ViewBag.TradeHistories = OwnDataBase.database.TradeHistories.Where(o => o.EmulationNumber == Id);
+            ViewBag.EmulationNumber = Id;
             return View();
         }
     }

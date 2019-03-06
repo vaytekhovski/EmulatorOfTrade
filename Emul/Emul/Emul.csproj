@@ -69,6 +69,12 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Z.BulkOperations, Version=2.14.9.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.BulkOperations.2.14.9\lib\net45\Z.BulkOperations.dll</HintPath>
+    </Reference>
+    <Reference Include="Z.EntityFramework.Extensions, Version=3.16.31.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Z.EntityFramework.Extensions.3.16.31\lib\net45\Z.EntityFramework.Extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Web.Razor">
@@ -115,10 +121,11 @@
     </Compile>
     <Compile Include="Models\DataBase\DBModels\Coin_TH.cs" />
     <Compile Include="Models\DataBase\DBModels\TH.cs" />
-    <Compile Include="Models\EmulatorExam\EmulatorExamAsync.cs" />
+    <Compile Include="Models\EmulatorExam\EmulatorExam.cs" />
+    <Compile Include="Models\Emulator\EmulatorAsync.cs" />
     <Compile Include="Services\DownloadTradeHistory.cs" />
     <Compile Include="Services\TradeHistoryContext.cs" />
-    <Compile Include="Models\EmulatorExam\EmulatorExam.cs" />
+    <Compile Include="Models\EmulatorExam\EmulatorExamThread.cs" />
     <Compile Include="Models\EmulatorExam\Examination.cs" />
     <Compile Include="Models\Emulator\Emulator2.cs" />
     <Compile Include="Services\OwnDataBase.cs" />
@@ -146,6 +153,8 @@
     <Content Include="Views\EmulatorExam\Main.cshtml" />
     <Content Include="Views\Shared\EmulatorExamLayout.cshtml" />
     <Content Include="Views\EmulatorExam\ShowResults.cshtml" />
+    <Content Include="Views\EmulatorExam\ClearResults.cshtml" />
+    <Content Include="Views\Emulator\ShowEmulation.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -9,19 +9,20 @@ namespace Emulator.Models.Emulator
     public class Emulator2
     {
         public List<TH> TradeHistory = new List<TH>();
-        
 
         private List<Coin_TH> DB = new List<Coin_TH>();
+
+        private int Id;
 
         private DateTime StartTime;
         private DateTime EndTime;
 
-        private double Diff;
+        public double Diff;
         private double PersentDiff;
 
-        private double CheckTime;
-        private double BuyTime;
-        private double HoldTime;
+        public double CheckTime;
+        public double BuyTime;
+        public double HoldTime;
         private double balanceCoin;
         private double balanceUSD;
 
@@ -37,8 +38,11 @@ namespace Emulator.Models.Emulator
         private double totalFee;
         private double ABSRate;
 
+        private bool SaveData;
+
 
         private DateTimeOffset previusDate;
+        
 
         public Emulator2() { }
 
@@ -47,10 +51,14 @@ namespace Emulator.Models.Emulator
             DB = _DB ?? throw new ArgumentNullException(nameof(_DB));
         }
 
-        public void Settings(DateTime _StartTime, DateTime _EndTime, double _Diff, double _CheckTime, double _BuyTime, double _HoldTime, double _balance)
+        public void Settings(DateTime _StartTime, DateTime _EndTime, bool _SaveData, int _Id, double _Diff, double _CheckTime, double _BuyTime, double _HoldTime, double _balance)
         {
             StartTime = _StartTime;
             EndTime = _EndTime;
+
+            SaveData = _SaveData;
+
+            Id = _Id;
 
             Diff = _Diff;
             PersentDiff = Diff / 100;
@@ -69,9 +77,6 @@ namespace Emulator.Models.Emulator
 
         public void MakeMoney()
         {
-            var sw = new Stopwatch();
-            sw.Start();
-
             for (var index = startIndex; index < lastIndex; index++)
             {
                 if(previusDate.AddMinutes(1) <= DB[index].Date)
@@ -82,8 +87,6 @@ namespace Emulator.Models.Emulator
                     
                     }
             }
-            sw.Stop();
-            Debug.WriteLine(sw.ElapsedMilliseconds);
         }
 
         private bool IsDiff(int index)
@@ -138,35 +141,37 @@ namespace Emulator.Models.Emulator
 
         private int Buy(int index)
         {
-            BreakValues();
-
-            int lastIndex = 0;
+            int whenBuy = 0;
             int i = 0;
             for (i = index; i < DB.Count; i++)
             {
                 if (balanceUSD == 0)
                     break;
 
-                if (DB[i].Type == "Sell" && DB[index].Date.AddMinutes(BuyTime) > DB[i].Date)
+                if (DB[i].Type == "Sell")
                 {
-                    MakePurchaseBUY(i);
+                    if (DB[index].Date.AddMinutes(BuyTime) > DB[i].Date)
+                    {
+                        MakePurchaseBUY(i);
+                        whenBuy = i;
+                    }
+                    else
+                        break;
                 }
-                else
-                    break;
+                
 
             }
-
-            lastIndex = i;
-            AddTH(index, "Buy");
-            return lastIndex;
+            
+            if(SaveData)
+                AddTH(whenBuy, "Buy");
+            return i;
         }
 
         private int Sell(int index)
         {
-            BreakValues();
-
-            int lastIndex = 0;
+            
             int i = 0;
+            int whenSell = 0;
             for (i = index; i < DB.Count; i++)
             {
                 if (balanceCoin == 0)
@@ -175,18 +180,21 @@ namespace Emulator.Models.Emulator
                 if (DB[i].Type == "Buy" && DB[index].Date.AddMinutes(HoldTime) < DB[i].Date)
                 {
                     MakePurchaseSELL(i);
+                    whenSell = i;
                 }
 
             }
-
-            lastIndex = i;
-            AddTH(index, "Sell");
-            return lastIndex;
+            
+            if(SaveData)
+                AddTH(whenSell, "Sell");
+            return i;
         }
         
 
         private void MakePurchaseBUY(int i)
         {
+            BreakValues();
+
             feeUSD = FEE * DB[i].Total;
             totalFee += feeUSD;
             balanceUSD -= feeUSD;
@@ -210,6 +218,8 @@ namespace Emulator.Models.Emulator
 
         private void MakePurchaseSELL(int i)
         {
+            BreakValues();
+
             feeCoin = 0.002 * DB[i].Amount;
             totalFee += feeCoin;
             balanceCoin -= feeCoin;
@@ -234,6 +244,7 @@ namespace Emulator.Models.Emulator
         {
             TradeHistory.Add(new TH
             {
+                EmulationNumber = Id,
                 Date = DB[index].Date,
                 Type = Type,
                 Rate = ABSRate,

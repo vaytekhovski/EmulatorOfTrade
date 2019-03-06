@@ -41,7 +41,7 @@ namespace Emulator.Controllers.Data
                 ConvertToTH(DownloadTradeHistory.CycleDownloadData(startDate, endDate, Pair), Pair);
 
                 CheckExist(Pair, DB);
-
+                
                 OwnDataBase.database.TradeHistory.AddRange(th_list);
                 OwnDataBase.database.SaveChanges();
 

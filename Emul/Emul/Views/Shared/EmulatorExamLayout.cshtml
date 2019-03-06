@@ -38,10 +38,14 @@
         <label for="balance">Balance: </label>
         <input type="text" name="balance" value="1000000" />$.
         <br><br>
-
+        <label for="SaveData">Save Trade History for each emulation?: </label>
+        <input type="checkbox" name="SaveData" value="true" checked="checked"/>
+        <br><br>
         <input type="submit" name="Examination" value="Запуск" formaction="../EmulatorExam/Examination" formmethod="post" />
         <br>
         <input type="submit" name="ShowResults" value="Показать результаты" formaction="../EmulatorExam/ShowResults" formmethod="post" />
+        <br>
+        <input type="submit" name="ShowResults" value="очистить результаты" formaction="../EmulatorExam/ClearResults" formmethod="post" />
     </form>
 
     @RenderBody()

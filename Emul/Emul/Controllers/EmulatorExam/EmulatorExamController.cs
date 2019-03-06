@@ -21,7 +21,7 @@ namespace Emul.Controllers.EmulatorExam
             return View();
         }
 
-        public async System.Threading.Tasks.Task<ActionResult> Examination(string Pair, DateTime StartDate, DateTime EndDate, string diffFrom, string diffTo, string diffStep, string checkTimeFrom, string checkTimeTo, string checkTimeStep, string buyTimeFrom, string buyTimeTo, string buyTimeStep, string holdTimeFrom, string holdTimeTo, string holdTimeStep, string balance)
+        public ActionResult Examination(string Pair, DateTime StartDate, DateTime EndDate, bool SaveData, string diffFrom, string diffTo, string diffStep, string checkTimeFrom, string checkTimeTo, string checkTimeStep, string buyTimeFrom, string buyTimeTo, string buyTimeStep, string holdTimeFrom, string holdTimeTo, string holdTimeStep, string balance)
         {
             Debug.WriteLine("parse DB to LIST started");
             var Coin_DB = new List<Coin_TH>();
@@ -32,7 +32,7 @@ namespace Emul.Controllers.EmulatorExam
             var emulatorexam = new Models.EmulatorExam.EmulatorExam(Coin_DB);
 
             Debug.WriteLine("set settings");
-            emulatorexam.Settings(StartDate, EndDate, double.Parse(diffFrom), double.Parse(diffTo), double.Parse(diffStep), double.Parse(checkTimeFrom), double.Parse(checkTimeTo), double.Parse(checkTimeStep), double.Parse(buyTimeFrom), double.Parse(buyTimeTo), double.Parse(buyTimeStep), double.Parse(holdTimeFrom), double.Parse(holdTimeTo), double.Parse(holdTimeStep), double.Parse(balance));
+            emulatorexam.Settings(StartDate, EndDate, SaveData, double.Parse(diffFrom), double.Parse(diffTo), double.Parse(diffStep), double.Parse(checkTimeFrom), double.Parse(checkTimeTo), double.Parse(checkTimeStep), double.Parse(buyTimeFrom), double.Parse(buyTimeTo), double.Parse(buyTimeStep), double.Parse(holdTimeFrom), double.Parse(holdTimeTo), double.Parse(holdTimeStep), double.Parse(balance));
             Debug.WriteLine("start examination");
             emulatorexam.StartExamination();
 
@@ -44,6 +44,18 @@ namespace Emul.Controllers.EmulatorExam
         public ActionResult ShowResults()
         {
             ViewBag.examinations = OwnDataBase.database.Examinations.OrderByDescending(value => value.Balance);
+            return View();
+        }
+
+        public ActionResult ClearResults()
+        {
+            OwnDataBase.database.Examinations.DeleteFromQueryAsync();
+            OwnDataBase.database.TradeHistories.DeleteFromQueryAsync();
+
+            OwnDataBase.database.SaveChanges();
+
+
+            ViewBag.status = $"Deleting examination history canceled";
             return View();
         }
     }

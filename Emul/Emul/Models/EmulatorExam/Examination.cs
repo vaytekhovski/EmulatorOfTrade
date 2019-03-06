@@ -4,7 +4,8 @@ namespace Emul.Models.EmulatorExam
 {
     public class Examination
     {
-        public int id { get; set; }
+        public int Id { get; set; }
+        public int EmulationNumber { get; set; }
         public DateTimeOffset StartDate { get; set; }
         public DateTimeOffset EndDate { get; set; }
         public double Diff { get; set; }

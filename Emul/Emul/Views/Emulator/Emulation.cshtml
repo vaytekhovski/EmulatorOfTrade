@@ -12,8 +12,8 @@
     <link rel="stylesheet" type="text/css" href="~/App_Data/Styles/style.css">.
 </head>
 <body>
-    <div> 
-        <table >
+    <div>
+        <table>
             <tr>
                 <td><p>Date: </p></td>
                 <td><p>Type: </p></td>
@@ -25,15 +25,15 @@
             </tr>
             @foreach (var value in ViewBag.TradeHistory)
             {
-            <tr>
-                <td><p>@value.Date </p></td>
-                <td><p>@value.Type </p></td>
-                <td><p>@value.Rate </p></td>
-                <td><p>@value.Amount </p></td>
-                <td><p>@value.Total </p></td>
-                <td><p>@value.Fee </p></td>
-                <td><p>@value.Balance </p></td>
-            </tr>
+                <tr>
+                    <td><p>@value.Date </p></td>
+                    <td><p>@value.Type </p></td>
+                    <td><p>@value.Rate </p></td>
+                    <td><p>@value.Amount </p></td>
+                    <td><p>@value.Total </p></td>
+                    <td><p>@value.Fee </p></td>
+                    <td><p>@value.Balance </p></td>
+                </tr>
             }
         </table>
     </div>

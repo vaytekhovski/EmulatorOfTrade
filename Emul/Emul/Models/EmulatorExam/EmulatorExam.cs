@@ -1,16 +1,22 @@
-﻿using Emulator.Models.DataBase.DBModels;
-using System.Collections.Generic;
+﻿using Emulator.Models;
+using Emulator.Models.DataBase.DBModels;
 using Emulator.Models.Emulator;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
-using Emulator.Models;
-using System.Threading;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
+
+
 
 namespace Emul.Models.EmulatorExam
 {
     public class EmulatorExam
     {
-        private readonly List<Coin_TH> DB = new List<Coin_TH>();
+
+        public readonly List<Examination> examinations = new List<Examination>();
+        private  List<Coin_TH> DB = new List<Coin_TH>();
 
         private DateTime StartDate;
         private DateTime EndDate;
@@ -25,7 +31,7 @@ namespace Emul.Models.EmulatorExam
 
         private double buyTimeFrom;
         private double buyTimeTo;
-        private double buyTimeStep;
+        private  double buyTimeStep;
 
         private double holdTimeFrom;
         private double holdTimeTo;
@@ -39,15 +45,20 @@ namespace Emul.Models.EmulatorExam
         private int countHold;
         private int countCycles;
 
+        private bool SaveData;
+
         public EmulatorExam(List<Coin_TH> _DB)
         {
             DB = _DB;
         }
 
-        public void Settings(DateTime _StartDate, DateTime _EndDate, double _DiffFrom, double _DiffTo, double _DiffStep, double _CheckTimeFrom, double _CheckTimeTo, double _CheckTimeStep, double _BuyTimeFrom, double _BuyTimeTo, double _BuyTimeStep, double _HoldTimeFrom, double _HoldTimeTo, double _HoldTimeStep, double _balance)
+
+        public void Settings(DateTime _StartDate, DateTime _EndDate, bool _SaveData, double _DiffFrom, double _DiffTo, double _DiffStep, double _CheckTimeFrom, double _CheckTimeTo, double _CheckTimeStep, double _BuyTimeFrom, double _BuyTimeTo, double _BuyTimeStep, double _HoldTimeFrom, double _HoldTimeTo, double _HoldTimeStep, double _balance)
         {
             StartDate = _StartDate;
             EndDate = _EndDate;
+
+            SaveData = _SaveData;
 
             diffFrom = _DiffFrom;
             diffTo = _DiffTo;
@@ -67,21 +78,23 @@ namespace Emul.Models.EmulatorExam
 
             balance = _balance;
 
-            countDiff = (int)((diffTo + 0.1 - diffFrom)/diffStep);
+            countDiff = (int)((diffTo + 0.1 - diffFrom) / diffStep);
             countCheck = (int)((checkTimeTo + 1 - checkTimeFrom) / checkTimeStep);
-            countBuy = (int)((buyTimeTo + 1 - buyTimeFrom ) / buyTimeStep);
+            countBuy = (int)((buyTimeTo + 1 - buyTimeFrom) / buyTimeStep);
             countHold = (int)((holdTimeTo + 1 - holdTimeFrom) / holdTimeStep);
             countCycles = countDiff * countCheck * countBuy * countHold;
+
+
         }
 
         private int countOfThreads = 20;
+        private int index;
 
         public void StartExamination()
         {
-            int index = 1;
+            index = 1;
             var emulator = new Emulator2(DB);
             
-            Settings settings;
 
             for (double indexDiff = diffFrom; indexDiff < diffTo + 0.1; indexDiff += diffStep)
             {
@@ -94,94 +107,42 @@ namespace Emul.Models.EmulatorExam
                             var SW = new Stopwatch();
                             SW.Start();
 
-                            settings = new Settings(StartDate, EndDate, balance, index, countCycles);
-                            settings.emulator = emulator;
-                            settings.indexDiff = indexDiff;
-                            settings.indexCheck = indexCheck;
-                            settings.indexBuy = indexBuy;
-                            settings.indexHold = indexHold;
+                            StartEmulation(emulator, indexDiff, indexCheck, indexBuy, indexHold);
 
 
-                            Thread thread = new Thread(new ParameterizedThreadStart(settings.StartEmulation));
-                            thread.Start();
-                            if(index % countOfThreads == 0)
-                                thread.Join();
-                            
-                            if(!thread.IsAlive)
+                            SW.Stop();
+                            OwnDataBase.database.Examinations.Add(NewElement(indexDiff, indexCheck, indexBuy, indexHold, emulator.GetBalance()));
+                            if (SaveData)
                             {
-
-                                SW.Stop();
-                                Debug.WriteLine($"Время, затраченное на {countOfThreads} потоков {SW.ElapsedMilliseconds} миллисекунд");
-                                Debug.WriteLine($"Время, затраченное на 1 поток {SW.ElapsedMilliseconds / countOfThreads} миллисекунд");
+                                Debug.WriteLine("save th");
+                                OwnDataBase.database.TradeHistories.AddRange(emulator.TradeHistory);
                             }
+                            OwnDataBase.database.SaveChanges();
 
-
-                            //StartEmulation(emulator, indexDiff, indexCheck, indexBuy, indexHold);
                             index++;
-
-
+                            Debug.WriteLine(SW.ElapsedMilliseconds);
                         }
                     }
                 }
             }
-            //OwnDataBase.database.Examinations.AddRange(settings.examinations);
-            OwnDataBase.database.SaveChanges();
             DB.Clear();
         }
-
         
 
-    }
-
-
-    public class Settings
-    {
-        public Settings(DateTime start, DateTime end, double _balance, int _index, int _count)
+        private void StartEmulation(Emulator2 emulator, double indexDiff, double indexCheck, double indexBuy, double indexHold)
         {
-            StartDate = start;
-            EndDate = end;
-            balance = _balance;
-            index = _index;
-            countCycles = _count;
-        }
-
-
-        public List<Examination> examinations = new List<Examination>();
-
-
-        private DateTime StartDate;
-        private DateTime EndDate;
-
-        public Emulator2 emulator;
-        public double indexDiff;
-        public double indexCheck;
-        public double indexBuy;
-        public double indexHold;
-        private double balance;
-        private int index;
-        private int countCycles;
-
-        public void StartEmulation(object settings)
-        {
-            Debug.WriteLine("[" + index + "/" + countCycles + "] Thread STARTED");
-
-            var sw = new Stopwatch();
-            sw.Start();
-            emulator.Settings(StartDate, EndDate, indexDiff, indexCheck, indexBuy, indexHold, balance);
+            emulator.Settings(StartDate, EndDate, SaveData,  index, indexDiff, indexCheck, indexBuy, indexHold, balance);
             emulator.MakeMoney();
-            sw.Stop();
-            Debug.WriteLine(sw.ElapsedMilliseconds);
-
-            examinations.Add(NewElement(indexDiff, indexCheck, indexBuy, indexHold, emulator.GetBalance()));
 
 
+            Debug.WriteLine($"[{index}/{countCycles}] Diff: {indexDiff}, CheckTime: {indexCheck}, Buytime: {indexBuy}, HoldTime: {indexHold}, Balance: {emulator.GetBalance()}");
         }
-
 
         private Examination NewElement(double indexDiff, double indexCheck, double indexBuy, double indexHold, double balance)
         {
             return new Examination
             {
+                EmulationNumber = index,
                 StartDate = StartDate,
                 EndDate = EndDate,
                 Diff = indexDiff,
@@ -191,5 +152,6 @@ namespace Emul.Models.EmulatorExam
                 Balance = balance
             };
         }
+
     }
 }

@@ -243,3 +243,7 @@ D:\GITHUB REPOS\Emul\Emul\obj\Debug\Emul.csproj.CoreCompileInputs.cache
 D:\GITHUB REPOS\Emul\Emul\obj\Debug\Emul.csproj.CopyComplete
 D:\GITHUB REPOS\Emul\Emul\obj\Debug\Emul.dll
 D:\GITHUB REPOS\Emul\Emul\obj\Debug\Emul.pdb
+D:\REPOSITORY\EmulatorOfTrade\Emul\Emul\bin\Z.BulkOperations.dll
+D:\REPOSITORY\EmulatorOfTrade\Emul\Emul\bin\Z.EntityFramework.Extensions.dll
+D:\REPOSITORY\EmulatorOfTrade\Emul\Emul\bin\Z.BulkOperations.xml
+D:\REPOSITORY\EmulatorOfTrade\Emul\Emul\bin\Z.EntityFramework.Extensions.xml
