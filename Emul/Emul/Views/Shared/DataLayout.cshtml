@@ -3,69 +3,48 @@
 <head>
     <meta charset="utf-8" />
     <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="~/Content/stylesheet.css" rel="stylesheet" />
+
 </head>
 
-
-
 <body>
-    <button>@Html.ActionLink("Home", "Index", "Home")</button>
-    <form method="post">
-        <select name="Pair">
-            <option value="BTC">USDT-BTC</option>
-            <option value="XRP">USDT-XRP</option>
-            <option value="ETH">USDT-ETH</option>
-        </select>
-        <input type="date" name="StartDate">
-        <input type="date" name="EndDate">
-        </br>
+    <div>
+        @Html.Partial("Navbar")
+    </div>
+    <div class="layout_block">
+        <form method="post">
 
-        <style type="text/css">
-            .container {
-                height: 100px;
-                width: 750px;
-            }
-
-            .left {
-                float: left;
-                width: 250px;
-            }
-
-            .right {
-                float: right;
-                width: 250px;
-            }
-        </style>
-
-        <div class="container">
-            <div class="left">
-                <fieldset>
-                    <legend>Show</legend>
-                    <input type="submit" name="showTradeHistory" value="Trade History" formaction="../Show/ShowTradeHistiories" formmethod="post" />
-                </fieldset>
+            <div class="input-group mb-3">
+                <select class="form-control" name="Pair">
+                    <option value="BTC">USDT-BTC</option>
+                    <option value="XRP">USDT-XRP</option>
+                    <option value="ETH">USDT-ETH</option>
+                </select>
+                <input type="date" class="form-control" name="StartDate" value="" />
+                <input type="date" class="form-control" name="EndDate" value="" />
             </div>
-            <div class="right">
-                <fieldset>
-                    <legend>Download</legend>
-                    <label for="MinValue">Минимальное заносимое значение Total:</label><br />
-                    <input type="text" name="MinValue" value="500" />$
-                    <input type="submit" name="downloadTradeHistory" value="Trade History" formaction="../Download/TradeHistoryDownload" formmethod="post" />
-                </fieldset>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Мин. ордер ($)</span>
+                </div>
+                <input type="text" class="form-control" name="MinValue" value="500">
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" name="downloadTradeHistory" value="Trade History" formaction="../Download/TradeHistoryDownload" formmethod="get">Download Trade History</button>
+                </div>
             </div>
-            <div class="right">
-                <fieldset>
-                    <legend>Clear</legend>
-                    <input type="submit" name="downloadTradeHistory" value="Trade History" formaction="../Clear/ClearTradeHistory" formmethod="post" />
-                </fieldset>
+            <div class="btn-group" style="width:100%">
+                <button type="submit" class="btn btn-secondary" name="showTradeHistory" value="Trade History" formaction="../Show/ShowTradeHistiories" formmethod="post">Show Trade History</button>
+                <button type="submit" class="btn btn-secondary" name="clearTradeHistory" value="Trade History" formaction="../Clear/ClearTradeHistory" formmethod="post">Clear Trade History</button>
             </div>
-        </div>
 
-
-        
-
-        
-
-    </form>
-
+        </form>
+    </div>
     @RenderBody()
 </body>
 </html>

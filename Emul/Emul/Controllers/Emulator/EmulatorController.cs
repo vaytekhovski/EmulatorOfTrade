@@ -43,7 +43,7 @@ namespace Emulator.Controllers
             Debug.WriteLine(sw.ElapsedMilliseconds);
             
             ViewBag.balance = emulator.GetBalance();
-            ViewBag.TradeHistory = Models.Emulator.EmulatorAsync.TradeHistory;
+            ViewBag.TradeHistory = emulator.TradeHistory;
             
             return View();
         }

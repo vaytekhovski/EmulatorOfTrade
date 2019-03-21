@@ -3,61 +3,117 @@
 <head>
     <meta charset="utf-8" />
     <title>@ViewBag.Title</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="~/Content/stylesheet.css" rel="stylesheet" />
 </head>
 
-
-
 <body>
-    <button>@Html.ActionLink("Home", "Index", "Home")</button>
-    <form method="post">
-        <select name="Pair">
-            <option value="BTC">USDT-BTC</option>
-            <option value="XRP">USDT-XRP</option>
-            <option value="ETH">USDT-ETH</option>
-        </select>
-        <input type="date" name="StartDate" value="2018-09-01">
-        <input type="date" name="EndDate" value="2019-03-01">
-        <br><br>
+    <div>
+        @Html.Partial("Navbar")
+    </div>
+    <div class="layout_block">
+        <form method="post">
+            <div class="input-group mb-3">
+                <select class="form-control" name="Pair">
+                    <option value="BTC">USDT-BTC</option>
+                    <option value="XRP">USDT-XRP</option>
+                    <option value="ETH">USDT-ETH</option>
+                </select>
+                <input type="date" class="form-control" name="StartDate" value="" />
+                <input type="date" class="form-control" name="EndDate" value="" />
+            </div>
 
-        Difference: <br>
-        From  <input type="text" name="diffFrom" value="0,5" />% 
-        To <input type="text" name="diffTo" value="2" />%<br><br>
-        Difference step:<input type="text" name="diffStep" value="0,1" />%
-        <br><br><br>
-        Difference Check: <br>
-        From  <input type="text" name="diffCheckFrom" value="10" />сек.
-        To <input type="text" name="diffCheckTo" value="120" />%<br><br>сек.
-        Difference Check step:<input type="text" name="diffCheckStep" value="10" />сек.
-        <br><br><br>
-        Check time: <br>
-        From  <input type="text" name="checkTimeFrom" value="1" /> 
-        To <input type="text" name="checkTimeTo" value="10" /> minutes<br><br>
-        Check time step:<input type="text" name="checkTimeStep" value="1" /> minutes
-        <br><br><br>
-        Buy time: <br>
-        From  <input type="text" name="buyTimeFrom" value="1" /> 
-        To <input type="text" name="buyTimeTo" value="10" /> minutes<br><br>
-        Buy time step:<input type="text" name="buyTimeStep" value="1" /> minutes
-        <br><br><br>
-        Hold time:
-        From  <input type="text" name="holdTimeFrom" value="1" /> 
-        To <input type="text" name="holdTimeTo" value="30" /> minutes<br><br>
-        Hold time step:<input type="text" name="holdTimeStep" value="1" /> minutes
-        <br><br><br>
-        <label for="balance">Balance: </label>
-        <input type="text" name="balance" value="1000000" />$.
-        <br><br>
-        <label for="SaveData">Save Trade History for each emulation?: </label>
-        <input type="checkbox" name="SaveData" value="true" checked="checked" />
-        <input name="SaveData" type="hidden" value="false" />
-        <br><br>
-        <input type="submit" name="Examination" value="Запуск" formaction="../EmulatorExam/Examination" formmethod="post" />
-        <br>
-        <input type="submit" name="ShowResults" value="Показать результаты" formaction="../EmulatorExam/ShowResults" formmethod="post" />
-        <br>
-        <input type="submit" name="ShowResults" value="очистить результаты" formaction="../EmulatorExam/ClearResults" formmethod="post" />
-    </form>
+            <div class="input-group mb-3" style="width:100%">
+                <div class="input-group-prepend">
+                    <span class="input-group-text span_emulator">Diff</span>
+                </div>
+                <input type="text" name="diffFrom" class="form-control" placeholder="От (0,5)">
+                <input type="text" name="diffStep" class="form-control" placeholder="Шаг (0,1)">
+                <input type="text" name="diffTo" class="form-control" placeholder="До (2)">
+                <div class="input-group-append">
+                    <span class="input-group-text span_emulator">%</span>
+                </div>
+            </div>
 
+            <div class="input-group mb-3" style="width:100%">
+                <div class="input-group-prepend">
+                    <span class="input-group-text span_emulator">Diff Check</span>
+                </div>
+                <input type="text" name="diffCheckFrom" class="form-control" placeholder="От (10)">
+                <input type="text" name="diffCheckStep" class="form-control" placeholder="Шаг (10)">
+                <input type="text" name="diffCheckTo" class="form-control" placeholder="До (120)">
+                <div class="input-group-append">
+                    <span class="input-group-text span_emulator">сек.</span>
+                </div>
+            </div>
+
+            <div class="input-group mb-3" style="width:100%">
+                <div class="input-group-prepend">
+                    <span class="input-group-text span_emulator">Check time</span>
+                </div>
+                <input type="text" name="checkTimeFrom" class="form-control" placeholder="От (1)">
+                <input type="text" name="checkTimeStep" class="form-control" placeholder="Шаг (1)">
+                <input type="text" name="checkTimeTo" class="form-control" placeholder="До (10)">
+                <div class="input-group-append">
+                    <span class="input-group-text span_emulator">мин.</span>
+                </div>
+            </div>
+
+            <div class="input-group mb-3" style="width:100%">
+                <div class="input-group-prepend">
+                    <span class="input-group-text span_emulator">Buy time</span>
+                </div>
+                <input type="text" name="buyTimeFrom" class="form-control" placeholder="От (1)">
+                <input type="text" name="buyTimeStep" class="form-control" placeholder="Шаг (1)">
+                <input type="text" name="buyTimeTo" class="form-control" placeholder="До (10)">
+                <div class="input-group-append">
+                    <span class="input-group-text span_emulator">мин.</span>
+                </div>
+            </div>
+
+            <div class="input-group mb-3" style="width:100%">
+                <div class="input-group-prepend">
+                    <span class="input-group-text span_emulator">Hold time</span>
+                </div>
+                <input type="text" name="holdTimeFrom" class="form-control" placeholder="От (1)">
+                <input type="text" name="holdTimeStep" class="form-control" placeholder="Шаг (1)">
+                <input type="text" name="holdTimeTo" class="form-control" placeholder="До (30)">
+                <div class="input-group-append">
+                    <span class="input-group-text span_emulator">мин.</span>
+                </div>
+            </div>
+
+            <div class="input-group mb-3" style="width:100%">
+                <div class="input-group-prepend">
+                    <span class="input-group-text span_emulator">Balance</span>
+                </div>
+                <input type="text" name="balance" class="form-control" value="1000000">
+                <div class="input-group-append">
+                    <span class="input-group-text span_emulator">$</span>
+                </div>
+            </div>
+
+            <div class="form-check">
+                <label class="form-check-label">
+                    <input type="checkbox" name="SaveData" value="true" checked="checked" />
+                    <input name="SaveData" type="hidden" value="false" />
+                    <span>Сохранить историю операций для каждой эмуляции</span>
+                </label>
+            </div>
+
+
+            <div class="btn-group" style="width:100%">
+
+                <button type="submit" class="btn btn-secondary" name="ShowResults" value="Показать результаты" formaction="../EmulatorExam/ShowResults" formmethod="post">Показать результаты</button>
+                <button type="submit" class="btn btn-secondary" name="Examination" value="Запуск" formaction="../EmulatorExam/Examination" formmethod="post">Запуск</button>
+                <button type="submit" class="btn btn-secondary" name="ShowResults" value="очистить результаты" formaction="../EmulatorExam/ClearResults" formmethod="post">Очистить результаты</button>
+            </div>
+        </form>
+    </div>
     @RenderBody()
 </body>
 </html>

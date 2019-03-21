@@ -49,10 +49,10 @@ namespace Emul.Controllers.EmulatorExam
 
         public ActionResult ClearResults()
         {
-            OwnDataBase.database.Examinations.DeleteFromQueryAsync();
-            OwnDataBase.database.TradeHistories.DeleteFromQueryAsync();
-
-            OwnDataBase.database.BulkSaveChangesAsync();
+            OwnDataBase.database.Examinations.DeleteFromQuery();
+            OwnDataBase.database.TradeHistories.DeleteFromQuery();
+            //OwnDataBase.database.SaveChanges();
+            OwnDataBase.database.BulkSaveChanges();
 
 
             ViewBag.status = $"Deleting examination history canceled";

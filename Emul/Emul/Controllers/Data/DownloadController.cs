@@ -46,12 +46,8 @@ namespace Emulator.Controllers.Data
                 CheckMinValue();
                 CheckExist(Pair, DB);
 
-<<<<<<< HEAD
                 OwnDataBase.database.BulkInsertAsync(th_list);
-=======
-                //OwnDataBase.database.TradeHistory.AddRange(th_list);
-                OwnDataBase.database.BulkInsert(th_list);
->>>>>>> rizhiy
+                
                 OwnDataBase.database.BulkSaveChangesAsync();
 
                 Debug.WriteLine($"{DateTime.Now} Download trade history {startDate.Date} : {endDate.Date} ended\n");

@@ -14,12 +14,13 @@
 <body>
     <div>
         <form method="post">
-            <table>
+            <table class="table table-bordered table-striped" style=" margin: auto; width:60%" id="myTable">
                 <tr>
-                    <td><p>Номер: </p></td>
+                    <td><p>ID: </p></td>
                     <td><p>Дата начала: </p></td>
                     <td><p>Дата конца: </p></td>
                     <td><p>Дифф: </p></td>
+                    <td><p>Чек Дифф: </p></td>
                     <td><p>Чек тайм: </p></td>
                     <td><p>Бай тайм: </p></td>
                     <td><p>Холд тайм: </p></td>
@@ -27,16 +28,17 @@
                 </tr>
                 @foreach (var value in ViewBag.examinations)
                 {
-                <tr>
-                    <td><input type="submit" name="Id" value="@value.EmulationNumber" formaction="../Emulator/ShowEmulation" formmethod="post" /></td>
-                    <td><p>@value.StartDate</p></td>
-                    <td><p>@value.EndDate</p></td>
-                    <td><p>@value.Diff</p></td>
-                    <td><p>@value.CheckTime</p></td>
-                    <td><p>@value.BuyTime</p></td>
-                    <td><p>@value.HoldTime</p></td>
-                    <td><p>@value.Balance</p></td>
-                </tr>
+                    <tr>
+                        <td><input type="submit" name="Id" value="@value.EmulationNumber" formaction="../Emulator/ShowEmulation" formmethod="post" /></td>
+                        <td><p>@value.StartDate</p></td>
+                        <td><p>@value.EndDate</p></td>
+                        <td><p>@value.Diff</p></td>
+                        <td><p>@value.CheckDiff</p></td>
+                        <td><p>@value.CheckTime</p></td>
+                        <td><p>@value.BuyTime</p></td>
+                        <td><p>@value.HoldTime</p></td>
+                        <td><p>@value.Balance</p></td>
+                    </tr>
                 }
             </table>
         </form>

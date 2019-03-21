@@ -42,6 +42,7 @@ namespace Emul.Models.EmulatorExam
         private double holdTimeStep;
 
         private double balance;
+        private double outBalance;
 
         private int countDiff;
         private int countCheckDiff;
@@ -96,8 +97,7 @@ namespace Emul.Models.EmulatorExam
 
 
         }
-
-        private int countOfThreads = 20;
+        
         private int index;
 
         public void StartExamination()
@@ -118,34 +118,28 @@ namespace Emul.Models.EmulatorExam
                                 var SW = new Stopwatch();
                                 SW.Start();
 
-                                StartEmulation(emulator, indexDiff, indexCheckDiff, indexCheck, indexBuy, indexHold);
+                                emulator.Settings(StartDate, EndDate, indexCheckDiff, SaveData, index, indexDiff, indexCheck, indexBuy, indexHold, balance);
+                                emulator.MakeMoney();
+                                outBalance = emulator.GetBalance();
 
-
-<<<<<<< HEAD
-                                SW.Stop();
-                                OwnDataBase.database.Examinations.Add(NewElement(indexDiff, indexCheckDiff, indexCheck, indexBuy, indexHold, emulator.GetBalance()));
+                                examinations.Add(NewElement(indexDiff, indexCheckDiff, indexCheck, indexBuy, indexHold, outBalance));
+                                
+                                Debug.WriteLine($"[{index}/{countCycles}] Diff: {indexDiff}, checkDiff: {indexCheckDiff}, CheckTime: {indexCheck}, Buytime: {indexBuy}, HoldTime: {indexHold}, Balance: {outBalance}");
                                 if (SaveData)
                                 {
                                     Debug.WriteLine("save th");
-                                    OwnDataBase.database.TradeHistories.AddRange(emulator.TradeHistory);
+                                    
+                                    OwnDataBase.database.BulkInsert(emulator.TradeHistory);
                                 }
-                                OwnDataBase.database.SaveChanges();
-=======
-                            SW.Stop();
-                            OwnDataBase.database.Examinations.Add(NewElement(indexDiff, indexCheck, indexBuy, indexHold, emulator.GetBalance()));
-                            if (SaveData)
-                            {
-                                Debug.WriteLine("save th");
-
-                                //OwnDataBase.database.TradeHistories.AddRange(emulator.TradeHistory);
-                                OwnDataBase.database.BulkInsert(emulator.TradeHistory);
-                            }
-                            OwnDataBase.database.BulkSaveChangesAsync();
->>>>>>> rizhiy
 
                                 index++;
+                                SW.Stop();
                                 Debug.WriteLine(SW.ElapsedMilliseconds);
                             }
+                            OwnDataBase.database.BulkInsert(examinations);
+                            examinations.Clear();
+                            OwnDataBase.database.BulkSaveChanges();
+                            Debug.WriteLine("SAVE DATA");
                         }
                     }
                 }
@@ -154,16 +148,6 @@ namespace Emul.Models.EmulatorExam
             DB.Clear();
         }
         
-
-        private void StartEmulation(Emulator2 emulator, double indexDiff,double indexCheckDiff, double indexCheck, double indexBuy, double indexHold)
-        {
-            emulator.Settings(StartDate, EndDate, indexCheckDiff, SaveData, index, indexDiff, indexCheck, indexBuy, indexHold, balance);
-            emulator.MakeMoney();
-
-
-            Debug.WriteLine($"[{index}/{countCycles}] Diff: {indexDiff}, checkDiff: {indexCheckDiff}, CheckTime: {indexCheck}, Buytime: {indexBuy}, HoldTime: {indexHold}, Balance: {emulator.GetBalance()}");
-        }
-
         private Examination NewElement(double indexDiff, double indexCheckDiff, double indexCheck, double indexBuy, double indexHold, double balance)
         {
             return new Examination

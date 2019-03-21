@@ -2,15 +2,65 @@
 
 <!DOCTYPE html>
 
+
+@{
+    Layout = null;
+}
+
+
 <html>
 <head>
+
     <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+
+    <link href="~/Content/stylesheet.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 </head>
 <body>
     <div>
-        <button>@Html.ActionLink("Data", "Main", "Data")</button>
-        <button>@Html.ActionLink("Emulator", "Main", "Emulator")</button>
-        <button>@Html.ActionLink("Emulator Examination", "Main", "EmulatorExam")</button>
+        @Html.Partial("Navbar")
     </div>
+    <form action="/" method="post">
+        <div class="cards">
+            <div class="row">
+                <div class="col">
+                    <div class="card" style="width:400px">
+                        <img class="card-img-top" src="~/Content/tables.jpg" alt="Card image" style="height: 400px">
+                        <div class="card-body">
+                            <h4 class="card-title">Таблицы</h4>
+                            <p class="card-text">Просмотр и загрузка статистических данных, сформированных по разного рода критериям</p>
+                            <button class="btn btn-primary" type="submit" formaction="../Data/Index" formmethod="post">Таблицы</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card" style="width:400px">
+                        <img class="card-img-top" src="~/Content/emulator.jpg" alt="Card image" style="height: 400px">
+                        <div class="card-body">
+                            <h4 class="card-title">Эмулятор</h4>
+                            <p class="card-text">Эмуляция торговли на криптобирже Poloniex, а так же анализ торговли</p>
+                            <button class="btn btn-primary" type="submit" formaction="../Emulator/Main" formmethod="post">Эмулятор</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+
+                    <div class="card" style="width:400px">
+                        <img class="card-img-top" src="~/Content/exam.jpg" alt="Card image" style="height: 400px">
+                        <div class="card-body">
+                            <h4 class="card-title">Множестевенная эмуляция</h4>
+                            <p class="card-text">Запуск эмулятора с расширенным спектром параметров</p>
+                            <button class="btn btn-primary" type="submit" formaction="../EmulatorExam/Main" formmethod="post">Множественная эмуляция</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </body>
 </html>
