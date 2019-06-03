@@ -4,10 +4,15 @@ namespace TradeEmulatorMVC.Controllers
 {
     public class HomeController : Controller
     {
+
         public ActionResult Index(string SortOrder)
         {
-
-            return View();
+           
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            return (RedirectToAction("../Account/Login"));
         }
         
         public ActionResult Main()
